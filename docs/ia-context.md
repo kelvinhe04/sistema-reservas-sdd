@@ -8,6 +8,15 @@ Proyecto 2 de Tópicos Especiales II (Prof. Regis Rivera): Desarrollo Orientado 
 
 Recorrido obligatorio: **ODD → SDD → código → pruebas → Resultado al Usuario (valor)**.
 
+## Material de referencia
+
+- `docs/material/enunciado-proyecto2.pdf`: enunciado oficial del Proyecto 2. Es la fuente de verdad de lo que se evalúa. Léelo si hay dudas sobre requisitos de entrega.
+- `docs/material/presentacion.pptx`: presentación del grupo (11 diapositivas: problema y outcome, recorrido ODD → SDD, specs, flujo de Git, uso de IA, testing, cambio de especificación, rotación de roles, demo y cierre). Al avanzar el proyecto hay que mantenerla coherente con el repo y completar la demo con evidencia real.
+
+## Entrega
+
+Solo se entrega la presentación y el enlace del repositorio de GitHub. Todo lo evaluable (specs, issues, commits, ramas, PRs, pruebas, AI log) debe estar en el repositorio.
+
 ## Método
 
 1. **ODD primero.** Antes de programar se define qué resultado queremos conseguir para el usuario, no qué aplicación programar. Borrador: el problema es que las reservas se coordinan por WhatsApp o llamadas, con cruces de horarios y dobles reservas. El outcome es reducir conflictos y que los usuarios encuentren franjas disponibles sin intervención del personal.

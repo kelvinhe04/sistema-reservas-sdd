@@ -12,6 +12,12 @@ Recorrido: **ODD → SDD → código → pruebas → Resultado al Usuario (valor
 | 2 | Implementación + pruebas base | Einer Mosquera (Jassiel-1331) | Kelvin He (kelvinhe04) | Roy Barrera (Roy-x24) |
 | 3 | Cambio de requerimiento + cierre + entrega | Roy Barrera (Roy-x24) | Einer Mosquera (Jassiel-1331) | Kelvin He (kelvinhe04) |
 
+## Material
+
+- `docs/ia-context.md`: contexto y reglas para los asistentes de IA de cada integrante
+- `docs/material/enunciado-proyecto2.pdf`: enunciado del proyecto
+- `docs/material/presentacion.pptx`: presentación del grupo
+
 ## Estructura
 
 ```
