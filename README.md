@@ -8,9 +8,9 @@ Recorrido: **ODD → SDD → código → pruebas → Resultado al Usuario (valor
 
 | Ciclo | Enfoque | Product / Spec Lead | Architecture / Dev Lead | QA / DevOps Lead |
 |---|---|---|---|---|
-| 1 | ODD + especificaciones (`specs/`) | Kelvin (kelvinhe04) | Roy (Roy-x24) | Jassiel (Jassiel-1331) |
-| 2 | Implementación + pruebas base | Jassiel (Jassiel-1331) | Kelvin (kelvinhe04) | Roy (Roy-x24) |
-| 3 | Cambio de requerimiento + cierre + entrega | Roy (Roy-x24) | Jassiel (Jassiel-1331) | Kelvin (kelvinhe04) |
+| 1 | ODD + especificaciones (`specs/`) | Kelvin He (kelvinhe04) | Roy Barrera (Roy-x24) | Einer Mosquera (Jassiel-1331) |
+| 2 | Implementación + pruebas base | Einer Mosquera (Jassiel-1331) | Kelvin He (kelvinhe04) | Roy Barrera (Roy-x24) |
+| 3 | Cambio de requerimiento + cierre + entrega | Roy Barrera (Roy-x24) | Einer Mosquera (Jassiel-1331) | Kelvin He (kelvinhe04) |
 
 ## Estructura
 
