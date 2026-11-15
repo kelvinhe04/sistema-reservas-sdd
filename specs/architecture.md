@@ -26,6 +26,10 @@ Dos capas que se refuerzan:
 
 Ninguna regla de concurrencia depende de comprobaciones en memoria ni de bloqueos de la aplicación.
 
+**Configuración obligatoria de cada conexión SQLite** (`db.py`): `isolation_level=None` (las transacciones se abren a mano con `BEGIN IMMEDIATE`), `PRAGMA busy_timeout` de varios segundos para que un escritor espere en lugar de fallar con `database is locked`, `PRAGMA foreign_keys = ON` y `PRAGMA journal_mode = WAL`. Cada hilo o petición usa su propia conexión; nunca se comparte una entre hilos. Sin esto, la prueba concurrente AC-06 falla de forma intermitente.
+
+**Fábrica de la aplicación.** `main.py` expone `create_app(db_path=None, reloj=None)`: si no se indican, toma `DB_PATH` de la configuración y el reloj real. Las pruebas la usan para inyectar una base temporal y un reloj controlable (`tests/conftest.py`).
+
 ## Estructura de `src/`
 
 ```
@@ -84,6 +88,7 @@ Desde la raíz del repositorio:
 ```
 python -m venv .venv
 pip install -r requirements.txt
+# requirements.txt: fastapi, uvicorn, pytest, httpx y tzdata (necesario en Windows para ZoneInfo)
 ADMIN_KEY=<clave> uvicorn src.app.main:app --reload     # servidor local
 pytest                                                   # todas las pruebas
 pytest tests/unit                                        # solo unitarias

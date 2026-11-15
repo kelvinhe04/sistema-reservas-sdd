@@ -13,8 +13,8 @@ Estado: borrador del ciclo 1 (Architecture / Dev Lead). Tareas ordenadas para el
 
 | # | Tarea | Contenido | RF | RN | AC |
 |---|---|---|---|---|---|
-| T-01 | Esqueleto del proyecto | Estructura de `src/` y `tests/`, `requirements.txt`, `config.py` con parámetros y variable `ADMIN_KEY`, `main.py` mínimo, `conftest.py` con base temporal y reloj controlable, `pytest` ejecutable | | | |
-| T-02 | Base de datos | `db.py`: conexión, `PRAGMA foreign_keys`, WAL, esquema de `data-model.md` con índice único parcial, índices y triggers; helper de transacción `BEGIN IMMEDIATE` | | RN-01, RN-02, RN-10 | |
+| T-01 | Esqueleto del proyecto | Estructura de `src/` y `tests/`, `requirements.txt` (fastapi, uvicorn, pytest, httpx, tzdata), `config.py` con parámetros y variable `ADMIN_KEY`, `main.py` con la fábrica `create_app(db_path, reloj)`, `conftest.py` con base temporal y reloj controlable, `pytest` ejecutable | | | |
+| T-02 | Base de datos | `db.py`: conexión, `PRAGMA foreign_keys`, WAL, esquema de `data-model.md` con índice único parcial, índices y triggers; helper de transacción `BEGIN IMMEDIATE`; cada conexión con `isolation_level=None`, `busy_timeout`, claves foráneas y WAL | | RN-01, RN-02, RN-10 | |
 | T-03 | Franjas y disponibilidad | `services/disponibilidad.py`: generación de franjas de 08:00 a 21:00 y estado libre u ocupada | RF-02 | RN-02, RN-04, RN-05 | AC-02, AC-03 |
 | T-04 | Canchas públicas | Servicio de canchas y `GET /api/canchas`, `GET /api/canchas/{id}/disponibilidad` | RF-01, RF-02 | RN-15 | AC-01, AC-02, AC-03 |
 | T-05 | Errores y validaciones | `errors.py` con formato único y códigos, `schemas.py` con validación de nombre y teléfono | | RN-08, RN-09 | AC-09 |
