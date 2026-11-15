@@ -25,10 +25,10 @@ Estado: borrador del ciclo 1. Los valores marcados con **[Supuesto]** son parám
 |---|---|
 | RN-08 | Una reserva requiere cancha activa, fecha, franja, nombre y teléfono |
 | RN-09 | Nombre: entre 2 y 60 caracteres. Teléfono: solo dígitos, entre 7 y 15 |
-| RN-10 | Cada reserva recibe un código único e irrepetible, que se usa junto al teléfono para consultarla o cancelarla |
-| RN-11 | Un teléfono puede tener como máximo 3 reservas activas a la vez **[Supuesto]** |
+| RN-10 | Cada reserva recibe un código único e irrepetible, que se usa junto al teléfono para consultarla o cancelarla. El código tiene 8 caracteres en mayúsculas y dígitos, sin caracteres ambiguos (0/O, 1/I/L), y no se genera en secuencia (D-05) |
+| RN-11 | Un teléfono puede tener como máximo 3 reservas activas a la vez **[Supuesto]**. Una reserva es **activa** si está `confirmada` y su franja todavía no ha empezado; las ya jugadas o canceladas no cuentan |
 | RN-12 | Estados de una reserva: `confirmada` y `cancelada`. Una cancelada no se reactiva; se crea una nueva |
-| RN-13 | El jugador puede cancelar hasta 2 horas antes del inicio de la franja **[Supuesto]**. El administrador puede cancelar en cualquier momento |
+| RN-13 | El jugador puede cancelar si faltan **2 horas o más** para el inicio de la franja **[Supuesto]**: con exactamente 2 h todavía puede; con menos de 2 h, no. El administrador puede cancelar en cualquier momento |
 | RN-14 | Consultar o cancelar exige que el código y el teléfono coincidan; si no, el sistema responde que no se encontró la reserva, sin revelar datos |
 
 ## Canchas y bloqueos
@@ -44,5 +44,5 @@ Estado: borrador del ciclo 1. Los valores marcados con **[Supuesto]** son parám
 
 | ID | Regla |
 |---|---|
-| RN-19 | Las operaciones del panel de administración exigen la clave de administrador |
+| RN-19 | Las operaciones del panel de administración exigen la clave de administrador, enviada en cada petición en el encabezado `X-Admin-Key` (D-04) |
 | RN-20 | El precio por hora se define por cancha y no cambia el precio mostrado en reservas ya creadas |

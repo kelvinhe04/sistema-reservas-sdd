@@ -34,9 +34,10 @@ def test_cuarta_reserva_del_mismo_telefono(db_path, reloj):
     tras cancelar una, se acepta (RN-11)."""
 
 
-@pytest.mark.skip(reason="pendiente decisión del Product Lead (issue #22)")
+@pytest.mark.ac("AC-11")
 def test_reservas_pasadas_no_cuentan_para_el_limite(db_path, reloj):
-    """Dado un teléfono con 3 reservas confirmadas ya jugadas: ¿puede reservar? Por definir."""
+    """Dado un teléfono con 3 reservas confirmadas cuya franja ya pasó,
+    cuando reserva otra franja futura, entonces se acepta (RN-11: activa = confirmada y futura, #22)."""
 
 
 def test_precio_se_copia_a_la_reserva(db_path, reloj):

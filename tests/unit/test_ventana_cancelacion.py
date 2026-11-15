@@ -14,9 +14,10 @@ def test_no_puede_cancelar_a_1h_59min():
     """Dada una reserva que empieza en 1 h 59 min, entonces el jugador no puede cancelar."""
 
 
-@pytest.mark.skip(reason="pendiente decisión del Product Lead (issue #22)")
-def test_exactamente_2h():
-    """Dada una reserva que empieza en exactamente 2 h: resultado por definir."""
+@pytest.mark.ac("AC-14")
+def test_puede_cancelar_a_exactamente_2h():
+    """Dada una reserva que empieza en exactamente 2 h, entonces el jugador todavía puede cancelar
+    (RN-13: 2 horas o más, decidido en #22)."""
 
 
 def test_admin_no_tiene_ventana():

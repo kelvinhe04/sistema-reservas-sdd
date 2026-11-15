@@ -57,9 +57,10 @@ Estado: borrador del ciclo 1. Formato Dado / Cuando / Entonces. Cada criterio ap
 - Entonces el sistema rechaza la solicitud
 
 **AC-11** (RN-11)
-- Dado un teléfono con 3 reservas activas
+- Dado un teléfono con 3 reservas activas (confirmadas y cuya franja aún no empieza)
 - Cuando intenta crear una cuarta
 - Entonces el sistema la rechaza
+- Y si en cambio sus 3 reservas confirmadas ya se jugaron, o alguna está cancelada, la nueva reserva se acepta
 
 ## Consultar y cancelar
 
@@ -74,7 +75,7 @@ Estado: borrador del ciclo 1. Formato Dado / Cuando / Entonces. Cada criterio ap
 - Entonces el sistema responde que no se encontró la reserva, sin revelar información
 
 **AC-14** (RF-06, RN-03, RN-13)
-- Dado una reserva confirmada que empieza en más de 2 horas
+- Dado una reserva confirmada que empieza en 2 horas o más (incluido exactamente 2 h)
 - Cuando el jugador la cancela con código y teléfono
 - Entonces queda `cancelada` y la franja vuelve a aparecer como libre
 
@@ -85,8 +86,9 @@ Estado: borrador del ciclo 1. Formato Dado / Cuando / Entonces. Cada criterio ap
 
 **AC-16** (RN-12)
 - Dado una reserva cancelada
-- Cuando se intenta cancelar o reactivar de nuevo
-- Entonces el sistema lo rechaza
+- Cuando se intenta cancelar de nuevo
+- Entonces el sistema lo rechaza y la reserva sigue `cancelada`
+- Nota: no existe operación para reactivar una reserva (RN-12, `api.md`); para volver a jugar se crea una nueva
 
 ## Administración
 
