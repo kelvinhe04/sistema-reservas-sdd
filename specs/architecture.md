@@ -86,14 +86,23 @@ Los valores marcados como supuesto en `business-rules.md` viven en `config.py` y
 Desde la raíz del repositorio:
 
 ```
-python -m venv .venv
+# bash / macOS / Linux
+python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-# requirements.txt: fastapi, uvicorn, pytest, httpx y tzdata (necesario en Windows para ZoneInfo)
-ADMIN_KEY=<clave> uvicorn src.app.main:app --reload     # servidor local
+ADMIN_KEY=<clave> uvicorn src.app.main:app --reload     # servidor local en http://127.0.0.1:8000
+
+# PowerShell (Windows)
+py -m venv .venv; .venv\Scripts\Activate.ps1
+pip install -r requirements.txt
+$env:ADMIN_KEY = "<clave>"; uvicorn src.app.main:app --reload
+
 pytest                                                   # todas las pruebas
 pytest tests/unit                                        # solo unitarias
 pytest tests/acceptance                                  # criterios de aceptación
+pytest -m conflicto                                      # no doble reserva
 ```
+
+`requirements.txt` fija fastapi, uvicorn, httpx, pytest y tzdata (necesario en Windows para `ZoneInfo`). `uvicorn src.app.main:app` crea la aplicación al arrancar (no al importar el módulo), así que `ADMIN_KEY` es obligatoria solo para arrancar el servidor.
 
 La base se crea sola en el primer arranque. Las pruebas usan una base temporal por prueba, sin tocar `data/`.
 

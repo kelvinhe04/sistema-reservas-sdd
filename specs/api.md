@@ -43,7 +43,7 @@ Criterios: AC-01.
 
 ### GET /api/canchas/{id}/disponibilidad?fecha=YYYY-MM-DD — RF-02
 
-Devuelve todas las franjas de la cancha para la fecha, de 08:00 a 21:00 (RN-04, RN-05), marcadas como libres u ocupadas (reserva confirmada o bloqueo).
+Devuelve todas las franjas de la cancha para la fecha, de 08:00 a 21:00 (RN-04, RN-05), marcadas como libres u ocupadas (reserva confirmada o bloqueo). Cada franja indica además `pasada: true` si ya empezó según la hora de la sede (RN-06), para que la interfaz no la ofrezca; una franja pasada puede seguir `libre`, pero no se puede reservar.
 
 Respuesta 200:
 
@@ -51,8 +51,8 @@ Respuesta 200:
 {
   "cancha_id": 1, "fecha": "2026-11-20",
   "franjas": [
-    { "hora_inicio": "08:00", "estado": "libre" },
-    { "hora_inicio": "09:00", "estado": "ocupada" }
+    { "hora_inicio": "08:00", "estado": "libre", "pasada": true },
+    { "hora_inicio": "09:00", "estado": "ocupada", "pasada": false }
   ]
 }
 ```
