@@ -31,3 +31,15 @@ def test_todo_criterio_tiene_prueba():
 def test_no_hay_pruebas_de_criterios_inexistentes():
     sobran = sorted(criterios_con_prueba() - criterios_en_spec())
     assert not sobran, f"Pruebas que citan criterios que no están en la spec: {sobran}"
+
+
+def test_ninguna_prueba_queda_en_skip():
+    """Issue #25: un AC no cuenta como cubierto si su prueba está omitida."""
+    con_skip = []
+    for archivo in (RAIZ / "tests").rglob("test_*.py"):
+        if archivo.name == "test_trazabilidad.py":
+            continue
+        texto = archivo.read_text(encoding="utf-8")
+        if "pytest.mark.skip" in texto or "pytest.skip(" in texto:
+            con_skip.append(archivo.relative_to(RAIZ).as_posix())
+    assert not con_skip, f"Pruebas en skip: {con_skip}"

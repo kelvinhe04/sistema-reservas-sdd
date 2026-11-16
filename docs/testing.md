@@ -104,7 +104,16 @@ Recomendación para el repositorio: activar en GitHub la protección de `main` q
 
 ## Estado actual
 
-T-01 a T-10 están implementadas y sus pruebas activas (sin `skip`). La concurrencia se prueba en los dos niveles: servicio (una conexión por hilo, 20 repeticiones) y API (un `TestClient` por hilo, 5 repeticiones), como pide el issue #25. Las pruebas de administración (`acceptance/test_admin.py`) se activan con T-11 a T-15. Una tarea no está terminada si sus pruebas siguen en `skip`.
+T-01 a T-16 están implementadas y **ninguna prueba está en `skip`**; `test_trazabilidad.py::test_ninguna_prueba_queda_en_skip` lo exige (issue #25). La concurrencia se prueba en los dos niveles: servicio (una conexión por hilo, 20 repeticiones) y API (un `TestClient` por hilo, 5 repeticiones). `acceptance/test_interfaz.py` comprueba que las páginas se sirven, son adaptables (viewport) y no dependen de recursos externos, y que todos los errores usan el formato único.
+
+### Prueba manual de la interfaz (15/11/2026)
+
+En el navegador, con el servidor local y una base de demostración, se recorrió el flujo completo en escritorio y en móvil (375 px):
+
+- Admin: clave incorrecta rechazada; entrar; crear canchas; precio negativo rechazado en el campo; agenda del día; bloquear una franja con motivo; cancelar una reserva a menos de 2 h (permitido al admin).
+- Jugador: elegir cancha, día y franja; las franjas ya iniciadas salen deshabilitadas; teléfono inválido marcado en su campo; reserva confirmada con código; la franja pasa a ocupada; consultar con código y teléfono; cancelar a menos de 2 h rechazado con el mensaje del límite.
+- Sin errores de JavaScript en consola (solo los 401/422 esperados de los casos negativos).
+- Corregido durante la prueba: columnas de la agenda, alineación de formularios cuando aparece un error, precio en formato `$12.00`, y errores de Starlette (cuerpo ilegible, ruta inexistente) con el formato único.
 
 ## Dudas resueltas (issue #22)
 
@@ -118,3 +127,4 @@ T-01 a T-10 están implementadas y sus pruebas activas (sin `skip`). La concurre
 |---|---|---|---|---|---|---|
 | 15/11/2026 | esqueleto ciclo 1 (local, Windows, Python 3.13) | 109 | 3 | 0 | 106 | Pasan las 3 de trazabilidad; las demás en `skip` hasta implementar `src/`. `pytest -m conflicto`: 30 omitidas |
 | 15/11/2026 | T-01 a T-10 (local, Windows, Python 3.13) | 134 | 117 | 0 | 17 | Omitidas solo las de administración (T-11 a T-15). AC-05 y AC-06 pasan en servicio y API |
+| 15/11/2026 | T-01 a T-16 (local, Windows, Python 3.13) | 157 | 157 | 0 | 0 | AC-01 a AC-22 cubiertos; `pytest -m conflicto`: 38 pasan |

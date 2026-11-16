@@ -12,6 +12,23 @@ Recorrido: **ODD → SDD → código → pruebas → Resultado al Usuario (valor
 | 2 | Implementación + pruebas base | Einer Mosquera (Jassiel-1331) | Kelvin He (kelvinhe04) | Roy Barrera (Roy-x24) |
 | 3 | Cambio de requerimiento + cierre + entrega | Roy Barrera (Roy-x24) | Einer Mosquera (Jassiel-1331) | Kelvin He (kelvinhe04) |
 
+## Cómo ejecutar
+
+```
+py -m venv .venv                      # Windows (en macOS/Linux: python -m venv .venv)
+.venv\Scripts\Activate.ps1           # macOS/Linux: source .venv/bin/activate
+pip install -r requirements.txt
+$env:ADMIN_KEY = "una-clave"          # macOS/Linux: export ADMIN_KEY=una-clave
+uvicorn src.app.main:app --reload
+```
+
+- Jugador: http://127.0.0.1:8000/
+- Administración: http://127.0.0.1:8000/admin.html (clave = `ADMIN_KEY`)
+- API documentada: http://127.0.0.1:8000/docs
+- Pruebas: `pytest` (todas), `pytest -m conflicto` (no doble reserva)
+
+La base SQLite se crea sola en `data/reservas.db`. Para la demo, crea las canchas desde el panel de administración.
+
 ## Material
 
 - `docs/ia-context.md`: contexto y reglas para los asistentes de IA de cada integrante

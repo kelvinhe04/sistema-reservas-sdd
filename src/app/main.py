@@ -10,11 +10,12 @@ from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse
 from fastapi.staticfiles import StaticFiles
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from .config import RelojReal, load_settings
 from .db import init_db
 from .errors import ErrorDominio
-from .routers import publico
+from .routers import admin, publico
 
 STATIC = Path(__file__).parent / "static"
 
@@ -51,7 +52,20 @@ def create_app(db_path=None, reloj=None, settings=None) -> FastAPI:
             content={"error": "validacion", "mensaje": "Datos de entrada inválidos", "campos": campos},
         )
 
+    @app.exception_handler(StarletteHTTPException)
+    async def _error_http(request: Request, exc: StarletteHTTPException):
+        # Errores de Starlette (cuerpo ilegible, ruta inexistente...) con el mismo formato.
+        codigos = {400: "validacion", 401: "no_autorizado", 404: "no_encontrado", 409: "conflicto"}
+        mensajes = {400: "El cuerpo de la petición no es JSON válido", 404: "Recurso no encontrado"}
+        return JSONResponse(
+            status_code=exc.status_code,
+            content={"error": codigos.get(exc.status_code, "error"),
+                     "mensaje": mensajes.get(exc.status_code, str(exc.detail)), "campos": {}},
+            headers=getattr(exc, "headers", None),
+        )
+
     app.include_router(publico.router)
+    app.include_router(admin.router)
     if STATIC.is_dir():
         app.mount("/", StaticFiles(directory=STATIC, html=True), name="static")
     return app

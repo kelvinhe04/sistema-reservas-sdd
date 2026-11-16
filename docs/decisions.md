@@ -7,3 +7,6 @@
 | D-03 | 15/11/2026 | Acceso a datos con `sqlite3` y SQL explícito, sin ORM | SQLAlchemy | Control directo de transacciones y de errores de restricción | Roy |
 | D-04 | 15/11/2026 | Clave de administrador en el encabezado `X-Admin-Key`, valor tomado de la variable de entorno `ADMIN_KEY` | Sesiones, JWT | Un único administrador (supuesto de `outcomes.md`); la opción más simple que cumple RN-19 | Roy |
 | D-05 | 15/11/2026 | Código de reserva: 8 caracteres aleatorios sin caracteres ambiguos, único en base de datos | UUID completo, número secuencial | Fácil de dictar o copiar; no adivinable por secuencia (RN-10, RN-14) | Roy |
+| D-06 | 15/11/2026 | Interfaz con HTML, CSS y JavaScript sin frameworks ni CDN, servida por FastAPI desde `src/app/static` | React/Vue, plantillas en servidor | Sin paso de compilación ni dependencias externas; funciona sin internet en la presentación (RNF-05) | Einer |
+| D-07 | 15/11/2026 | La disponibilidad devuelve `pasada` por franja | Calcular la hora en el navegador | La hora válida es la de la sede (RNF-04); el navegador puede tener otra zona horaria | Einer |
+| D-08 | 15/11/2026 | La clave de admin se guarda solo en `sessionStorage` del navegador y se envía en `X-Admin-Key` | Cookie de sesión | Mantiene D-04 sin estado en el servidor; se borra al cerrar la pestaña | Einer |

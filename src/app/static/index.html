@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reservar cancha</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="barra">
+    <div class="contenido">
+      <h1>Reserva tu cancha</h1>
+      <a href="/admin.html">Administración</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="tarjeta" aria-labelledby="t-cancha">
+      <h2 id="t-cancha"><span class="paso">1</span>Elige la cancha</h2>
+      <p class="ayuda">Mira los horarios libres y reserva sin escribirle a nadie.</p>
+      <div id="canchas" class="canchas" aria-live="polite"></div>
+      <div id="aviso-canchas"></div>
+    </section>
+
+    <section class="tarjeta" aria-labelledby="t-horario">
+      <h2 id="t-horario"><span class="paso">2</span>Elige el día y el horario</h2>
+      <p class="ayuda">Franjas de 1 hora. Puedes reservar hasta 30 días por adelantado.</p>
+      <div class="fila">
+        <div class="campo" style="max-width: 220px">
+          <label for="fecha">Día</label>
+          <input type="date" id="fecha">
+        </div>
+      </div>
+      <p id="fecha-texto" class="ayuda" style="margin: 10px 0 0"></p>
+      <div id="franjas" class="franjas" aria-live="polite"></div>
+      <div id="aviso-franjas"></div>
+    </section>
+
+    <section class="tarjeta" aria-labelledby="t-datos" id="seccion-datos">
+      <h2 id="t-datos"><span class="paso">3</span>Tus datos</h2>
+      <p class="ayuda" id="resumen-seleccion">Elige una cancha y un horario libre para continuar.</p>
+      <form id="form-reserva" novalidate>
+        <div class="fila">
+          <div class="campo">
+            <label for="nombre">Nombre</label>
+            <input id="nombre" name="nombre" autocomplete="name" maxlength="60" required>
+            <span class="error" data-error-de="nombre"></span>
+          </div>
+          <div class="campo">
+            <label for="telefono">Teléfono</label>
+            <input id="telefono" name="telefono" inputmode="numeric" autocomplete="tel" maxlength="15" placeholder="Solo dígitos" required>
+            <span class="error" data-error-de="telefono"></span>
+          </div>
+          <div class="campo boton">
+            <button class="btn" type="submit" id="btn-reservar" disabled>Reservar</button>
+            <span class="error"></span>
+          </div>
+        </div>
+      </form>
+      <div id="aviso-reserva"></div>
+    </section>
+
+    <section class="tarjeta" aria-labelledby="t-mia">
+      <h2 id="t-mia">¿Ya tienes una reserva?</h2>
+      <p class="ayuda">Consúltala o cancélala con tu código y tu teléfono. Puedes cancelar hasta 2 horas antes.</p>
+      <form id="form-consulta" novalidate>
+        <div class="fila">
+          <div class="campo">
+            <label for="c-codigo">Código</label>
+            <input id="c-codigo" name="codigo" maxlength="8" autocomplete="off" style="text-transform: uppercase" required>
+            <span class="error" data-error-de="codigo"></span>
+          </div>
+          <div class="campo">
+            <label for="c-telefono">Teléfono</label>
+            <input id="c-telefono" name="telefono" inputmode="numeric" maxlength="15" required>
+            <span class="error" data-error-de="telefono"></span>
+          </div>
+          <div class="campo boton">
+            <button class="btn secundario" type="submit">Consultar</button>
+            <span class="error"></span>
+          </div>
+        </div>
+      </form>
+      <div id="aviso-consulta"></div>
+    </section>
+  </main>
+
+  <script src="/comun.js"></script>
+  <script src="/jugador.js"></script>
+</body>
+</html>
