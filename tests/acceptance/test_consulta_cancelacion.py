@@ -40,5 +40,5 @@ def test_ac15_rechaza_cancelar_a_menos_de_2h(client, reloj):
 def test_ac16_no_cancela_dos_veces(client):
     """Dado una reserva cancelada
     Cuando se intenta cancelar de nuevo
-    Entonces responde 422 `regla_negocio`.
-    (No existe operación de reactivar en api.md; ver issue #22.)"""
+    Entonces responde 422 `regla_negocio` y la reserva sigue `cancelada`.
+    (No existe operación de reactivar: RN-12, api.md.)"""

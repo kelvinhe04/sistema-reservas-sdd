@@ -76,7 +76,8 @@ Las reglas RN-06, RN-07 y RN-13 dependen de la hora actual. Las pruebas no usan 
 
 - Franja que empieza justo ahora (rechazada) y la siguiente (aceptada).
 - Exactamente 30 días (aceptada) y 31 días (rechazada).
-- Cancelación a 2 h 01 min (aceptada), a 1 h 59 min (rechazada) y a exactamente 2 h (pendiente de decisión, issue #22).
+- Cancelación a 2 h 01 min (aceptada), a 1 h 59 min (rechazada) y a exactamente 2 h (aceptada, RN-13 según #22).
+- Límite por teléfono: 3 reservas futuras bloquean la cuarta; 3 reservas ya jugadas no (RN-11 según #22).
 
 ## Datos de prueba
 
@@ -105,11 +106,11 @@ Recomendación para el repositorio: activar en GitHub la protección de `main` q
 
 Las pruebas de `unit/`, `integration/` y `acceptance/` existen con su Dado / Cuando / Entonces, pero están marcadas `skip` con la tarea del plan que las desbloquea, porque `src/` todavía no tiene código. Quien implementa una tarea en el ciclo 2 quita el `skip` de sus pruebas en el mismo PR. Una tarea no está terminada si sus pruebas siguen en `skip`.
 
-## Dudas abiertas (issue #22)
+## Dudas resueltas (issue #22)
 
-- RN-13: cancelar con exactamente 2 h de antelación.
-- RN-11: si las reservas confirmadas ya pasadas cuentan como activas.
-- AC-16: no existe operación de "reactivar"; se prueba solo cancelar dos veces.
+- RN-13: con exactamente 2 h de antelación el jugador todavía puede cancelar.
+- RN-11: solo cuentan como activas las reservas confirmadas cuya franja no ha empezado.
+- AC-16: reformulado; no existe operación de "reactivar", se prueba cancelar dos veces.
 
 ## Resultados
 
