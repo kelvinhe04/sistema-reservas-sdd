@@ -17,7 +17,7 @@ Estado: borrador del ciclo 1. Los valores marcados con **[Supuesto]** son parám
 | RN-04 | Las franjas duran 1 hora y empiezan en hora en punto **[Supuesto]** |
 | RN-05 | Horario de operación de 08:00 a 22:00, es decir, la última franja empieza a las 21:00 **[Supuesto]** |
 | RN-06 | No se puede reservar una franja que ya empezó o que está en el pasado |
-| RN-07 | Se puede reservar con un máximo de 30 días de anticipación **[Supuesto]** |
+| RN-07 | Se puede reservar con un máximo de 30 días de anticipación **[Supuesto]**. Aplica solo a las reservas del jugador, no a los bloqueos del administrador (RN-18, D-10) |
 
 ## Reservas
 
@@ -38,7 +38,7 @@ Estado: borrador del ciclo 1. Los valores marcados con **[Supuesto]** son parám
 | RN-15 | Una cancha desactivada no aparece para reservar y no admite nuevas reservas |
 | RN-16 | Desactivar una cancha no borra ni cancela sus reservas futuras ya confirmadas; el administrador decide qué hacer con ellas |
 | RN-17 | El administrador no puede bloquear una franja que ya tiene una reserva confirmada; primero debe cancelar esa reserva |
-| RN-18 | Un bloqueo se puede quitar en cualquier momento y la franja vuelve a estar libre |
+| RN-18 | Un bloqueo se puede quitar en cualquier momento y la franja vuelve a estar libre. El administrador puede bloquear cualquier franja válida de cualquier fecha, sin el límite de 30 días de RN-07; un bloqueo sobre una franja ya pasada no tiene efecto práctico y no se rechaza (D-10) |
 
 ## Administración
 
