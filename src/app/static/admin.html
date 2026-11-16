@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Administración de canchas</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <header class="barra">
+    <div class="contenido">
+      <h1>Administración</h1>
+      <div style="display: flex; gap: 16px; align-items: center">
+        <a href="/">Vista del jugador</a>
+        <button class="btn secundario chico oculto" id="btn-salir" type="button">Salir</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="tarjeta" id="seccion-login" aria-labelledby="t-login" style="max-width: 420px">
+      <h2 id="t-login">Entrar al panel</h2>
+      <p class="ayuda">Escribe la clave de administrador.</p>
+      <form id="form-login" novalidate>
+        <div class="campo">
+          <label for="clave">Clave</label>
+          <input id="clave" name="clave" type="password" autocomplete="current-password" required>
+          <span class="error" data-error-de="clave"></span>
+        </div>
+        <button class="btn" type="submit" style="margin-top: 8px">Entrar</button>
+      </form>
+    </section>
+
+    <div id="panel" class="oculto">
+      <nav class="pestanas" role="tablist">
+        <button role="tab" id="tab-agenda" aria-selected="true" aria-controls="vista-agenda">Agenda del día</button>
+        <button role="tab" id="tab-canchas" aria-selected="false" aria-controls="vista-canchas">Canchas</button>
+      </nav>
+
+      <section id="vista-agenda" role="tabpanel" aria-labelledby="tab-agenda">
+        <div class="tarjeta">
+          <div class="fila">
+            <div class="campo" style="max-width: 220px">
+              <label for="a-fecha">Día</label>
+              <input type="date" id="a-fecha">
+            </div>
+            <div class="campo boton"><button class="btn secundario" type="button" id="btn-hoy">Hoy</button></div>
+          </div>
+          <p class="ayuda" id="a-fecha-texto" style="margin: 10px 0 0"></p>
+          <div id="aviso-agenda"></div>
+        </div>
+        <div id="agenda" class="agenda"></div>
+      </section>
+
+      <section id="vista-canchas" role="tabpanel" aria-labelledby="tab-canchas" class="oculto">
+        <div class="tarjeta">
+          <h2 id="t-form-cancha">Nueva cancha</h2>
+          <p class="ayuda">El precio se guarda en la cancha; cambiarlo no modifica las reservas ya hechas.</p>
+          <form id="form-cancha" novalidate>
+            <input type="hidden" name="id">
+            <div class="fila">
+              <div class="campo">
+                <label for="f-nombre">Nombre</label>
+                <input id="f-nombre" name="nombre" maxlength="60" required>
+                <span class="error" data-error-de="nombre"></span>
+              </div>
+              <div class="campo">
+                <label for="f-deporte">Deporte</label>
+                <input id="f-deporte" name="deporte" maxlength="60" list="deportes" required>
+                <datalist id="deportes"><option value="fútbol"><option value="pádel"><option value="baloncesto"><option value="tenis"></datalist>
+                <span class="error" data-error-de="deporte"></span>
+              </div>
+              <div class="campo" style="max-width: 160px">
+                <label for="f-precio">Precio por hora (USD)</label>
+                <input id="f-precio" name="precio_hora" type="number" min="0" step="0.01" inputmode="decimal" required>
+                <span class="error" data-error-de="precio_hora"></span>
+              </div>
+              <div class="campo boton">
+                <div style="display: flex; gap: 8px">
+                  <button class="btn" type="submit" id="btn-guardar-cancha">Crear</button>
+                  <button class="btn secundario oculto" type="button" id="btn-cancelar-edicion">Cancelar</button>
+                </div>
+                <span class="error"></span>
+              </div>
+            </div>
+          </form>
+          <div id="aviso-cancha"></div>
+        </div>
+        <div class="tarjeta">
+          <h2>Canchas</h2>
+          <div class="desplazable">
+            <table class="tabla canchas-admin">
+              <thead><tr><th>Nombre</th><th>Deporte</th><th>Precio / hora</th><th>Estado</th><th></th></tr></thead>
+              <tbody id="lista-canchas"></tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <script src="/comun.js"></script>
+  <script src="/admin.js"></script>
+</body>
+</html>
