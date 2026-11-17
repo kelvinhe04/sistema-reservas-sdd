@@ -69,10 +69,10 @@ tests/
 
 ## Checklist de entrega
 
-- [ ] Repositorio Git, Issues, commits identificables, ramas, Pull Requests, historial
+- [x] Repositorio Git, Issues, commits identificables, ramas, Pull Requests, historial
 - [ ] `specs/` completo y coherente con el código
-- [ ] Pruebas automatizadas: unitarias, reglas críticas, conflictos de reserva, validaciones de usuario, criterios de aceptación
-- [ ] Prueba automatizada obligatoria de **no permitir doble reserva**
+- [x] Pruebas automatizadas: unitarias, reglas críticas, conflictos de reserva, validaciones de usuario, criterios de aceptación
+- [x] Prueba automatizada obligatoria de **no permitir doble reserva**
 - [ ] `docs/ai-log.md` completo
 - [ ] Evidencia del cambio de requerimiento a mitad del proyecto (cambio → specs → criterios → plan → código → pruebas → resultados)
 - [ ] Material de presentación (PPT/Canva o equivalente)
