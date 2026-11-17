@@ -16,7 +16,7 @@ class Settings:
     close_hour: int = 22            # RN-05 (la última franja empieza a close_hour - 1)
     max_advance_days: int = 30      # RN-07
     max_active_per_phone: int = 3   # RN-11
-    cancel_limit_hours: int = 2     # RN-13
+    cancel_limit_hours: int = 6     # RN-13 (cambio ciclo 3: antes 2)
     timezone: str = "America/Panama"  # RNF-04
     admin_key: str = ""             # RN-19, RNF-07
     db_path: str = "data/reservas.db"
