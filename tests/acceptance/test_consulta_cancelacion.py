@@ -46,7 +46,7 @@ def test_ac13_no_revela_datos_si_no_coinciden(client, reserva, caso):
 
 @pytest.mark.ac("AC-14")
 def test_ac14_cancela_y_libera_franja(client, reserva, cancha):
-    """Dado una reserva confirmada que empieza en 2 horas o más
+    """Dado una reserva confirmada que empieza en 6 horas o más
     Cuando el jugador la cancela con código y teléfono
     Entonces responde 200 con estado `cancelada` y la franja vuelve a aparecer libre."""
     r = client.post(f"/api/reservas/{reserva['codigo']}/cancelar", json={"telefono": "62001234"})
