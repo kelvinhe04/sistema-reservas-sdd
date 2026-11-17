@@ -115,6 +115,18 @@ En el navegador, con el servidor local y una base de demostración, se recorrió
 - Sin errores de JavaScript en consola (solo los 401/422 esperados de los casos negativos).
 - Corregido durante la prueba: columnas de la agenda, alineación de formularios cuando aparece un error, precio en formato `$12.00`, y errores de Starlette (cuerpo ilegible, ruta inexistente) con el formato único.
 
+### Prueba manual del asistente paso a paso (16/11/2026, issue #62)
+
+Con el servidor local, en escritorio y en móvil (375 px):
+
+- Paso 1: tabla de canchas con disponibilidad y ocupación del día; en móvil, filas en formato tarjeta con precio visible.
+- Paso 2: días con conteo de libres (lista deslizable en móvil que se centra en el día elegido), selector para otra fecha hasta 30 días, franjas pasadas y ocupadas deshabilitadas, avisos de disponibilidad baja y de horas de hoy ya iniciadas.
+- Paso 3: enviar vacío marca nombre y teléfono; el teléfono con espacio se envía solo con dígitos.
+- Paso 4: código, copiar código y plazo de cancelación correcto (19:00 → hasta las 17:00).
+- Conflicto: otra persona reserva el mismo horario mientras se llenan los datos → vuelve al paso 2 con el aviso "Ese horario se acaba de ocupar" y sin horario elegido.
+- Mi reserva: consultar con código y teléfono, cancelar con confirmación en la página (sin diálogos del navegador), estado pasa a "Cancelada".
+- Encontrado y corregido durante la prueba: el navegador servía el `jugador.js` anterior desde caché (se añadió `?v=` a los recursos), plural de "1 libre", días a ancho completo en móvil y precio oculto en móvil.
+
 ## Dudas resueltas (issue #22)
 
 - RN-13: con exactamente 2 h de antelación el jugador todavía puede cancelar.
@@ -128,3 +140,4 @@ En el navegador, con el servidor local y una base de demostración, se recorrió
 | 15/11/2026 | esqueleto ciclo 1 (local, Windows, Python 3.13) | 109 | 3 | 0 | 106 | Pasan las 3 de trazabilidad; las demás en `skip` hasta implementar `src/`. `pytest -m conflicto`: 30 omitidas |
 | 15/11/2026 | T-01 a T-10 (local, Windows, Python 3.13) | 134 | 117 | 0 | 17 | Omitidas solo las de administración (T-11 a T-15). AC-05 y AC-06 pasan en servicio y API |
 | 15/11/2026 | T-01 a T-16 (local, Windows, Python 3.13) | 157 | 157 | 0 | 0 | AC-01 a AC-22 cubiertos; `pytest -m conflicto`: 38 pasan |
+| 16/11/2026 | asistente paso a paso (local, Windows, Python 3.13) | 161 | 161 | 0 | 0 | +4 pruebas de interfaz: recursos referenciados existen y la vista del jugador tiene los 4 pasos y "Mi reserva" |

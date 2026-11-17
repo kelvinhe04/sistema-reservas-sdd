@@ -3,89 +3,118 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Reservar cancha</title>
-  <link rel="stylesheet" href="/styles.css">
+  <meta name="color-scheme" content="light dark">
+  <title>Reserva tu cancha</title>
+  <link rel="stylesheet" href="/reserva.css?v=5">
 </head>
 <body>
-  <header class="barra">
-    <div class="contenido">
-      <h1>Reserva tu cancha</h1>
-      <a href="/admin.html">Administración</a>
+  <header class="cabecera">
+    <div class="fila">
+      <div class="izq">
+        <div class="marca">
+          <span class="logo" id="logo"></span>
+          <span class="nombre-app">Reserva tu cancha</span>
+        </div>
+        <nav class="nav" aria-label="Principal">
+          <a href="#reservar" id="nav-reservar">Nueva reserva</a>
+          <a href="#mi-reserva" id="nav-mia">Mi reserva</a>
+        </nav>
+      </div>
+      <a class="admin-link" href="/admin.html" aria-label="Administración"><span class="largo">Administración</span><span class="corto">Admin</span></a>
     </div>
   </header>
 
-  <main>
-    <section class="tarjeta" aria-labelledby="t-cancha">
-      <h2 id="t-cancha"><span class="paso">1</span>Elige la cancha</h2>
-      <p class="ayuda">Mira los horarios libres y reserva sin escribirle a nadie.</p>
-      <div id="canchas" class="canchas" aria-live="polite"></div>
-      <div id="aviso-canchas"></div>
-    </section>
-
-    <section class="tarjeta" aria-labelledby="t-horario">
-      <h2 id="t-horario"><span class="paso">2</span>Elige el día y el horario</h2>
-      <p class="ayuda">Franjas de 1 hora. Puedes reservar hasta 30 días por adelantado.</p>
-      <div class="fila">
-        <div class="campo" style="max-width: 220px">
-          <label for="fecha">Día</label>
-          <input type="date" id="fecha">
-        </div>
+  <div class="encabezado">
+    <div class="fila">
+      <div>
+        <div class="miga">Inicio <span aria-hidden="true">/</span> Reservas <span aria-hidden="true">/</span> <span id="miga-actual">Nueva reserva</span></div>
+        <h1 id="titulo">Nueva reserva</h1>
       </div>
-      <p id="fecha-texto" class="ayuda" style="margin: 10px 0 0"></p>
-      <div id="franjas" class="franjas" aria-live="polite"></div>
-      <div id="aviso-franjas"></div>
-    </section>
+    </div>
+  </div>
 
-    <section class="tarjeta" aria-labelledby="t-datos" id="seccion-datos">
-      <h2 id="t-datos"><span class="paso">3</span>Tus datos</h2>
-      <p class="ayuda" id="resumen-seleccion">Elige una cancha y un horario libre para continuar.</p>
-      <form id="form-reserva" novalidate>
-        <div class="fila">
-          <div class="campo">
-            <label for="nombre">Nombre</label>
-            <input id="nombre" name="nombre" autocomplete="name" maxlength="60" required>
-            <span class="error" data-error-de="nombre"></span>
+  <main>
+    <!-- Vista: nueva reserva -->
+    <div id="vista-reservar">
+      <div class="kpis" id="kpis" aria-live="polite"></div>
+      <div class="cuerpo">
+        <nav class="panel pasos" aria-label="Pasos de la reserva">
+          <div class="cab">
+            <h2>Progreso</h2>
+            <div class="progreso">
+              <div class="barra"><span id="barra-progreso"></span></div>
+              <span class="pista" id="texto-progreso"></span>
+            </div>
           </div>
-          <div class="campo">
-            <label for="telefono">Teléfono</label>
-            <input id="telefono" name="telefono" inputmode="numeric" autocomplete="tel" maxlength="15" placeholder="Solo dígitos" required>
-            <span class="error" data-error-de="telefono"></span>
-          </div>
-          <div class="campo boton">
-            <button class="btn" type="submit" id="btn-reservar" disabled>Reservar</button>
-            <span class="error"></span>
-          </div>
-        </div>
-      </form>
-      <div id="aviso-reserva"></div>
-    </section>
+          <ol id="lista-pasos"></ol>
+        </nav>
 
-    <section class="tarjeta" aria-labelledby="t-mia">
-      <h2 id="t-mia">¿Ya tienes una reserva?</h2>
-      <p class="ayuda">Consúltala o cancélala con tu código y tu teléfono. Puedes cancelar hasta 2 horas antes.</p>
-      <form id="form-consulta" novalidate>
-        <div class="fila">
-          <div class="campo">
-            <label for="c-codigo">Código</label>
-            <input id="c-codigo" name="codigo" maxlength="8" autocomplete="off" style="text-transform: uppercase" required>
-            <span class="error" data-error-de="codigo"></span>
+        <section class="panel principal" id="principal" aria-live="polite"></section>
+
+        <aside class="lateral" aria-label="Resumen">
+          <div class="panel">
+            <div class="cab" style="display: flex; justify-content: space-between; align-items: center">
+              <h2>Resumen</h2>
+              <span class="ficha" id="estado-resumen"></span>
+            </div>
+            <dl class="resumen" id="resumen"></dl>
+            <div class="total"><span style="font-weight: 600">Total</span><span class="v" id="total">$0.00</span></div>
           </div>
-          <div class="campo">
-            <label for="c-telefono">Teléfono</label>
-            <input id="c-telefono" name="telefono" inputmode="numeric" maxlength="15" required>
-            <span class="error" data-error-de="telefono"></span>
+          <div class="panel">
+            <div class="cab"><h2>Condiciones</h2></div>
+            <ul class="condiciones" id="condiciones"></ul>
           </div>
-          <div class="campo boton">
-            <button class="btn secundario" type="submit">Consultar</button>
-            <span class="error"></span>
+        </aside>
+      </div>
+    </div>
+
+    <!-- Vista: mi reserva -->
+    <div id="vista-mia" class="oculto">
+      <div class="cuerpo">
+        <div class="panel buscar">
+          <div class="cab">
+            <h2>Buscar reserva</h2>
+            <p class="pista" style="margin: 2px 0 0">Ingresa el código y el teléfono usados al reservar.</p>
           </div>
+          <form class="cuerpo-buscar" id="form-buscar" novalidate>
+            <div class="campo">
+              <label for="q-codigo">Código de reserva</label>
+              <input id="q-codigo" name="codigo" class="codigo-in" maxlength="8" autocomplete="off" placeholder="8 caracteres">
+            </div>
+            <div class="campo">
+              <label for="q-telefono">Teléfono</label>
+              <input id="q-telefono" name="telefono" type="tel" inputmode="numeric" maxlength="15" autocomplete="tel">
+            </div>
+            <button class="btn borde-acento" type="submit">Consultar</button>
+            <div id="aviso-buscar"></div>
+          </form>
         </div>
-      </form>
-      <div id="aviso-consulta"></div>
-    </section>
+
+        <section class="panel principal" aria-live="polite">
+          <div class="seccion-cab" style="display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center">
+            <div>
+              <h2>Detalle de la reserva</h2>
+              <p id="sub-detalle">Sin reserva seleccionada</p>
+            </div>
+            <span class="ficha oculto" id="estado-reserva"></span>
+          </div>
+          <div id="detalle-reserva"></div>
+        </section>
+
+        <aside class="panel lateral" aria-label="Política de cancelación" style="display: block">
+          <div class="cab"><h2>Política de cancelación</h2></div>
+          <div class="politica">
+            <div><span class="ficha tono-ok">Permitido</span><span>Hasta 2 horas antes del inicio.</span></div>
+            <div><span class="ficha tono-warn">Bloqueado</span><span>Con menos de 2 horas: no se puede cancelar en línea.</span></div>
+          </div>
+        </aside>
+      </div>
+    </div>
   </main>
 
-  <script src="/comun.js"></script>
-  <script src="/jugador.js"></script>
+  <div class="toast oculto" id="toast" role="status"></div>
+
+  <script src="/comun.js?v=5"></script>
+  <script src="/jugador.js?v=5"></script>
 </body>
 </html>
