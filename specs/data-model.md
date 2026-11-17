@@ -100,7 +100,7 @@ Estas se validan en la capa de servicio, con parámetros de `config.py` (ver `ar
 | RN-04, RN-05: franja de 1 h dentro del horario 08:00–22:00 | `services/disponibilidad.py` |
 | RN-06, RN-07: no pasado, máximo 30 días de anticipación | `services/reservas.py` con reloj inyectable |
 | RN-11: máximo 3 reservas confirmadas por teléfono | `services/reservas.py`, dentro de la transacción de creación |
-| RN-13: cancelación del jugador hasta 2 h antes | `services/reservas.py` |
+| RN-13: cancelación del jugador hasta 6 h antes | `services/reservas.py` |
 | RN-15: cancha activa para reservar | `services/reservas.py` |
 
 ## Consultas clave

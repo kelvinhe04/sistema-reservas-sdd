@@ -68,7 +68,7 @@ Los valores marcados como supuesto en `business-rules.md` viven en `config.py` y
 | `OPEN_HOUR` / `CLOSE_HOUR` | 8 / 22 | RN-05 |
 | `MAX_ADVANCE_DAYS` | 30 | RN-07 |
 | `MAX_ACTIVE_PER_PHONE` | 3 | RN-11 |
-| `CANCEL_LIMIT_HOURS` | 2 | RN-13 |
+| `CANCEL_LIMIT_HOURS` | 6 | RN-13 (cambio de requerimiento, ciclo 3) |
 | `TIMEZONE` | America/Panama | RNF-04 |
 | `ADMIN_KEY` | sin valor por defecto; obligatoria al iniciar | RN-19, RNF-07 |
 | `DB_PATH` | `data/reservas.db` | |
