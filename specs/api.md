@@ -183,7 +183,7 @@ Entrada: `{ "cancha_id": 1, "fecha": "2026-11-20", "hora_inicio": "10:00", "moti
 
 Respuesta 201: `{ "id": 3, "cancha_id": 1, "fecha": "2026-11-20", "hora_inicio": "10:00", "motivo": "Mantenimiento" }`
 
-Errores: 409 `conflicto` si la franja ya tiene una reserva confirmada (RN-17) o ya está bloqueada; 404 `no_encontrado` si la cancha no existe; 422 `validacion` o `regla_negocio` si la hora no es una franja válida.
+Errores: 409 `conflicto` si la franja ya tiene una reserva confirmada (RN-17) o ya está bloqueada; 404 `no_encontrado` si la cancha no existe; 422 `validacion` o `regla_negocio` si la hora no es una franja válida. No se valida que la fecha sea futura ni el máximo de 30 días: RN-07 aplica solo a reservas (RN-18, D-10).
 
 Criterios: AC-20, AC-21.
 
