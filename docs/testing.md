@@ -128,3 +128,4 @@ En el navegador, con el servidor local y una base de demostración, se recorrió
 | 15/11/2026 | esqueleto ciclo 1 (local, Windows, Python 3.13) | 109 | 3 | 0 | 106 | Pasan las 3 de trazabilidad; las demás en `skip` hasta implementar `src/`. `pytest -m conflicto`: 30 omitidas |
 | 15/11/2026 | T-01 a T-10 (local, Windows, Python 3.13) | 134 | 117 | 0 | 17 | Omitidas solo las de administración (T-11 a T-15). AC-05 y AC-06 pasan en servicio y API |
 | 15/11/2026 | T-01 a T-16 (local, Windows, Python 3.13) | 157 | 157 | 0 | 0 | AC-01 a AC-22 cubiertos; `pytest -m conflicto`: 38 pasan |
+| 17/11/2026 | Corrección #52 (rama `ciclo3/qa/base-ocupada-503`; local, Windows, Python 3.13) | 160 | 160 | 0 | 0 | 3 pruebas nuevas en `integration/test_base_ocupada.py`: cancelar con la base ocupada responde 503 `base_ocupada` en el formato único y la reserva sigue confirmada |

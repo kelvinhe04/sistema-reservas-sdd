@@ -3,6 +3,8 @@
 Arranque local:  ADMIN_KEY=<clave> uvicorn src.app.main:app --reload
 Pruebas:         create_app(db_path=..., reloj=...) desde tests/conftest.py
 """
+import logging
+import sqlite3
 from dataclasses import replace
 from pathlib import Path
 
@@ -18,6 +20,7 @@ from .errors import ErrorDominio
 from .routers import admin, publico
 
 STATIC = Path(__file__).parent / "static"
+log = logging.getLogger(__name__)
 
 
 def _mensaje(error: dict) -> str:
@@ -40,6 +43,18 @@ def create_app(db_path=None, reloj=None, settings=None) -> FastAPI:
     @app.exception_handler(ErrorDominio)
     async def _error_dominio(request: Request, exc: ErrorDominio):
         return JSONResponse(status_code=exc.http, content=exc.cuerpo())
+
+    @app.exception_handler(sqlite3.OperationalError)
+    async def _error_base(request: Request, exc: sqlite3.OperationalError):
+        # Escritor que espera más que busy_timeout (#52): mismo formato de error, sin 500 en texto plano.
+        if "locked" not in str(exc).lower():
+            raise exc
+        log.warning("Base ocupada en %s %s: %s", request.method, request.url.path, exc)
+        return JSONResponse(
+            status_code=503,
+            content={"error": "base_ocupada", "mensaje": "El sistema está ocupado; intenta de nuevo en unos segundos", "campos": {}},
+            headers={"Retry-After": "1"},
+        )
 
     @app.exception_handler(RequestValidationError)
     async def _error_validacion(request: Request, exc: RequestValidationError):
