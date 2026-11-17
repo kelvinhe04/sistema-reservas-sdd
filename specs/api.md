@@ -27,6 +27,8 @@ Todos los errores usan la misma forma:
 | `no_autorizado` | 401 | Falta la clave de administrador o es incorrecta |
 | `conflicto` | 409 | La franja ya tiene una reserva confirmada o un bloqueo (RN-01, RN-02), o se intenta bloquear una franja con reserva (RN-17) |
 
+También usan este formato los errores que genera el propio framework: un cuerpo que no es JSON legible responde 400 `validacion`, y una ruta de `/api` inexistente responde 404 `no_encontrado`.
+
 ## Endpoints del jugador
 
 ### GET /api/canchas — RF-01
@@ -141,7 +143,7 @@ Respuesta 200:
   "fecha": "2026-11-20",
   "canchas": [
     {
-      "cancha_id": 1, "nombre": "Cancha 1",
+      "cancha_id": 1, "nombre": "Cancha 1", "deporte": "fútbol", "activa": true,
       "franjas": [
         { "hora_inicio": "08:00", "estado": "libre" },
         { "hora_inicio": "09:00", "estado": "reservada", "reserva": { "codigo": "K7M2QX9P", "nombre": "Ana Pérez", "telefono": "62001234" } },
@@ -152,7 +154,7 @@ Respuesta 200:
 }
 ```
 
-Incluye las canchas desactivadas que aún tengan reservas confirmadas ese día (RN-16).
+Incluye las canchas desactivadas que aún tengan reservas confirmadas ese día (RN-16); por eso cada cancha indica `activa`. Las canchas se ordenan por nombre.
 
 Criterios: AC-18.
 
@@ -181,7 +183,7 @@ Entrada: `{ "cancha_id": 1, "fecha": "2026-11-20", "hora_inicio": "10:00", "moti
 
 Respuesta 201: `{ "id": 3, "cancha_id": 1, "fecha": "2026-11-20", "hora_inicio": "10:00", "motivo": "Mantenimiento" }`
 
-Errores: 409 `conflicto` si la franja ya tiene una reserva confirmada (RN-17) o ya está bloqueada; 404 `no_encontrado` si la cancha no existe; 422 `validacion` o `regla_negocio` si la hora no es una franja válida.
+Errores: 409 `conflicto` si la franja ya tiene una reserva confirmada (RN-17) o ya está bloqueada; 404 `no_encontrado` si la cancha no existe; 422 `validacion` o `regla_negocio` si la hora no es una franja válida. No se valida que la fecha sea futura ni el máximo de 30 días: RN-07 aplica solo a reservas (RN-18, D-10).
 
 Criterios: AC-20, AC-21.
 
