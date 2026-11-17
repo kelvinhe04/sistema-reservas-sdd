@@ -165,3 +165,25 @@ def test_bloqueo_y_reserva_simultaneos_solo_uno_gana(conn, settings, reloj, canc
     assert all(isinstance(r[1], Conflicto) for r in resultados if r[0] == "error")
     n_bloqueos = conn.execute("SELECT COUNT(*) FROM bloqueos").fetchone()[0]
     assert contar_confirmadas(conn, cancha, MANANA, "18:00") + n_bloqueos == 1
+
+
+@pytest.mark.ac("AC-11")
+@pytest.mark.parametrize("repeticion", range(5))
+def test_mismo_telefono_con_2_activas_solo_una_mas_simultanea(conn, settings, reloj, cancha, repeticion):
+    """Dado un teléfono con 2 reservas activas, cuando intenta 4 reservas distintas a la vez,
+    entonces solo 1 se acepta y el teléfono queda con 3 activas (RN-11, dentro de la transacción)."""
+    _en_paralelo.db_path = settings.db_path
+    for h in ("08:00", "09:00"):
+        reservas.crear(conn, settings, reloj.ahora(), {
+            "cancha_id": cancha, "fecha": MANANA, "hora_inicio": h,
+            "nombre": "Ana Pérez", "telefono": "62001234"})
+    horas = ["10:00", "11:00", "12:00", "13:00"]
+
+    def reservar(i, c):
+        return reservas.crear(c, settings, reloj.ahora(), {
+            "cancha_id": cancha, "fecha": MANANA, "hora_inicio": horas[i],
+            "nombre": "Ana Pérez", "telefono": "62001234"})
+
+    resultados = _en_paralelo(4, reservar)
+    assert sum(1 for r in resultados if r and r[0] == "ok") == 1, resultados
+    assert reservas.contar_activas(conn, "62001234", reloj.ahora()) == 3

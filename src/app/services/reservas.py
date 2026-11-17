@@ -1,4 +1,5 @@
 """Reservas: crear, consultar y cancelar (RF-03 a RF-06, RF-11)."""
+import logging
 import secrets
 import sqlite3
 from datetime import datetime, timedelta
@@ -8,6 +9,8 @@ from ..db import transaccion
 from ..errors import Conflicto, NoEncontrado, ReglaNegocio, Validacion
 from ..schemas import validar_fecha, validar_hora, validar_nombre, validar_telefono
 from .disponibilidad import exigir_franja_valida, inicio_franja
+
+log = logging.getLogger(__name__)
 
 # D-05: mayúsculas y dígitos sin caracteres ambiguos (0/O, 1/I/L)
 ALFABETO_CODIGO = "ABCDEFGHJKMNPQRSTUVWXYZ23456789"
@@ -113,6 +116,7 @@ def crear(conn: sqlite3.Connection, settings: Settings, ahora: datetime, datos: 
         raise Conflicto("La franja ya está ocupada") from e
     except sqlite3.OperationalError as e:
         if "locked" in str(e).lower():
+            log.warning("Base ocupada al crear reserva; se responde conflicto: %s", e)
             raise Conflicto("La franja se está reservando en este momento; intenta de nuevo") from e
         raise
     return consultar_por_codigo(conn, codigo)

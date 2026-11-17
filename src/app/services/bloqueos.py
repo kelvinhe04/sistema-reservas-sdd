@@ -1,4 +1,5 @@
 """Bloqueos de franjas (RF-10, RN-02, RN-17, RN-18)."""
+import logging
 import sqlite3
 from datetime import datetime
 
@@ -6,6 +7,8 @@ from ..config import Settings
 from ..db import transaccion
 from ..errors import Conflicto, NoEncontrado
 from .disponibilidad import exigir_franja_valida
+
+log = logging.getLogger(__name__)
 
 
 def crear(conn, settings: Settings, ahora: datetime, cancha_id: int, fecha: str,
@@ -32,6 +35,7 @@ def crear(conn, settings: Settings, ahora: datetime, cancha_id: int, fecha: str,
         raise Conflicto("La franja ya está bloqueada") from e
     except sqlite3.OperationalError as e:
         if "locked" in str(e).lower():
+            log.warning("Base ocupada al crear bloqueo; se responde conflicto: %s", e)
             raise Conflicto("La franja se está modificando en este momento; intenta de nuevo") from e
         raise
     return {"id": cur.lastrowid, "cancha_id": cancha_id, "fecha": fecha,
@@ -40,6 +44,7 @@ def crear(conn, settings: Settings, ahora: datetime, cancha_id: int, fecha: str,
 
 def eliminar(conn, bloqueo_id: int) -> None:
     """RN-18: quitar el bloqueo libera la franja."""
-    cur = conn.execute("DELETE FROM bloqueos WHERE id = ?", (bloqueo_id,))
+    with transaccion(conn):
+        cur = conn.execute("DELETE FROM bloqueos WHERE id = ?", (bloqueo_id,))
     if cur.rowcount == 0:
         raise NoEncontrado("No se encontró el bloqueo")
