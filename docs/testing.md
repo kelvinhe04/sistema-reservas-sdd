@@ -76,7 +76,7 @@ Las reglas RN-06, RN-07 y RN-13 dependen de la hora actual. Las pruebas no usan 
 
 - Franja que empieza justo ahora (rechazada) y la siguiente (aceptada).
 - Exactamente 30 días (aceptada) y 31 días (rechazada).
-- Cancelación a 2 h 01 min (aceptada), a 1 h 59 min (rechazada) y a exactamente 2 h (aceptada, RN-13 según #22).
+- Cancelación a 6 h 01 min (aceptada), a 5 h 59 min (rechazada) y a exactamente 6 h (aceptada). Límite de 6 h desde el cambio de requerimiento del ciclo 3 (#64); antes 2 h (#22).
 - Límite por teléfono: 3 reservas futuras bloquean la cuarta; 3 reservas ya jugadas no (RN-11 según #22).
 
 ## Datos de prueba
@@ -110,14 +110,14 @@ T-01 a T-16 están implementadas y **ninguna prueba está en `skip`**; `test_tra
 
 En el navegador, con el servidor local y una base de demostración, se recorrió el flujo completo en escritorio y en móvil (375 px):
 
-- Admin: clave incorrecta rechazada; entrar; crear canchas; precio negativo rechazado en el campo; agenda del día; bloquear una franja con motivo; cancelar una reserva a menos de 2 h (permitido al admin).
-- Jugador: elegir cancha, día y franja; las franjas ya iniciadas salen deshabilitadas; teléfono inválido marcado en su campo; reserva confirmada con código; la franja pasa a ocupada; consultar con código y teléfono; cancelar a menos de 2 h rechazado con el mensaje del límite.
+- Admin: clave incorrecta rechazada; entrar; crear canchas; precio negativo rechazado en el campo; agenda del día; bloquear una franja con motivo; cancelar una reserva a menos de 6 h (permitido al admin).
+- Jugador: elegir cancha, día y franja; las franjas ya iniciadas salen deshabilitadas; teléfono inválido marcado en su campo; reserva confirmada con código; la franja pasa a ocupada; consultar con código y teléfono; cancelar a menos de 6 h rechazado con el mensaje del límite.
 - Sin errores de JavaScript en consola (solo los 401/422 esperados de los casos negativos).
 - Corregido durante la prueba: columnas de la agenda, alineación de formularios cuando aparece un error, precio en formato `$12.00`, y errores de Starlette (cuerpo ilegible, ruta inexistente) con el formato único.
 
 ## Dudas resueltas (issue #22)
 
-- RN-13: con exactamente 2 h de antelación el jugador todavía puede cancelar.
+- RN-13: con exactamente 6 h de antelación el jugador todavía puede cancelar (antes 2 h; cambiado en el ciclo 3, #64).
 - RN-11: solo cuentan como activas las reservas confirmadas cuya franja no ha empezado.
 - AC-16: reformulado; no existe operación de "reactivar", se prueba cancelar dos veces.
 
@@ -128,5 +128,6 @@ En el navegador, con el servidor local y una base de demostración, se recorrió
 | 15/11/2026 | esqueleto ciclo 1 (local, Windows, Python 3.13) | 109 | 3 | 0 | 106 | Pasan las 3 de trazabilidad; las demás en `skip` hasta implementar `src/`. `pytest -m conflicto`: 30 omitidas |
 | 15/11/2026 | T-01 a T-10 (local, Windows, Python 3.13) | 134 | 117 | 0 | 17 | Omitidas solo las de administración (T-11 a T-15). AC-05 y AC-06 pasan en servicio y API |
 | 15/11/2026 | T-01 a T-16 (local, Windows, Python 3.13) | 157 | 157 | 0 | 0 | AC-01 a AC-22 cubiertos; `pytest -m conflicto`: 38 pasan |
-| 17/11/2026 | Corrección #52 (rama `ciclo3/qa/base-ocupada-503`; local, Windows, Python 3.13) | 160 | 160 | 0 | 0 | 3 pruebas nuevas en `integration/test_base_ocupada.py`: cancelar con la base ocupada responde 503 `base_ocupada` en el formato único y la reserva sigue confirmada |
 | 16/11/2026 | `8c33d13` (main, T-01 a T-16; local, Windows, Python 3.13) | 157 | 157 | 0 | 0 | Verificación final T-18 (#46): AC-01 a AC-22 con prueba y sin `skip` (`test_trazabilidad.py` pasa; 70 pruebas de aceptación). `pytest -m conflicto`: 38 de 38 pasan. Hallazgo abierto: #52 |
+| 16/11/2026 | Cambio ciclo 3: ventana de cancelación 2 h → 6 h (#64), commit de la rama `ciclo3/spec/cambio-ventana-cancelacion` (local, Windows, Python 3.13) | 157 | 157 | 0 | 0 | Pruebas de cancelación al límite (6 h 01, 5 h 59, 6 h exacta) ajustadas; `pytest -m conflicto`: 38 pasan |
+| 17/11/2026 | Corrección #52 (rama `ciclo3/qa/base-ocupada-503`; local, Windows, Python 3.13) | 160 | 160 | 0 | 0 | 3 pruebas nuevas en `integration/test_base_ocupada.py`: cancelar con la base ocupada responde 503 `base_ocupada` en el formato único y la reserva sigue confirmada |

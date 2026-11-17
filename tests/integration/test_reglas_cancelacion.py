@@ -34,7 +34,7 @@ def test_cancelar_libera_franja(conn, settings, reloj, reservar, cancha):
 
 
 @pytest.mark.ac("AC-15")
-def test_rechaza_cancelar_a_menos_de_2h(conn, settings, reloj, reservar):
+def test_rechaza_cancelar_a_menos_de_6h(conn, settings, reloj, reservar):
     r = reservar()
     reloj.fijar(datetime(2026, 11, 21, 16, 30, tzinfo=TZ))  # faltan 1 h 30 min
     with pytest.raises(ReglaNegocio):
@@ -42,9 +42,10 @@ def test_rechaza_cancelar_a_menos_de_2h(conn, settings, reloj, reservar):
 
 
 @pytest.mark.ac("AC-14")
-def test_acepta_cancelar_a_exactamente_2h(conn, settings, reloj, reservar):
+def test_acepta_cancelar_a_exactamente_6h(conn, settings, reloj, reservar):
+    """Cambio de requerimiento (ciclo 3): el límite es de 6 h; la reserva es a las 18:00."""
     r = reservar()
-    reloj.fijar(datetime(2026, 11, 21, 16, 0, tzinfo=TZ))
+    reloj.fijar(datetime(2026, 11, 21, 12, 0, tzinfo=TZ))
     assert reservas.cancelar_jugador(conn, settings, reloj.ahora(), r["codigo"], r["telefono"])["estado"] == "cancelada"
 
 
