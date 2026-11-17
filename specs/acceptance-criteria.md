@@ -75,12 +75,12 @@ Estado: borrador del ciclo 1. Formato Dado / Cuando / Entonces. Cada criterio ap
 - Entonces el sistema responde que no se encontró la reserva, sin revelar información
 
 **AC-14** (RF-06, RN-03, RN-13)
-- Dado una reserva confirmada que empieza en 2 horas o más (incluido exactamente 2 h)
+- Dado una reserva confirmada que empieza en 6 horas o más (incluido exactamente 6 h)
 - Cuando el jugador la cancela con código y teléfono
 - Entonces queda `cancelada` y la franja vuelve a aparecer como libre
 
 **AC-15** (RN-13)
-- Dado una reserva que empieza en menos de 2 horas
+- Dado una reserva que empieza en menos de 6 horas
 - Cuando el jugador intenta cancelarla
 - Entonces el sistema lo rechaza e indica que ya pasó el límite
 
@@ -118,7 +118,7 @@ Estado: borrador del ciclo 1. Formato Dado / Cuando / Entonces. Cada criterio ap
 - Entonces el sistema lo rechaza hasta que se cancele la reserva
 
 **AC-22** (RF-11, RN-13)
-- Dado cualquier reserva confirmada, incluso a menos de 2 horas del inicio
+- Dado cualquier reserva confirmada, incluso a menos de 6 horas del inicio
 - Cuando el administrador la cancela
 - Entonces queda `cancelada` y la franja se libera
 

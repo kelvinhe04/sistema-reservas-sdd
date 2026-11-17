@@ -116,7 +116,7 @@ Errores:
 | HTTP | `error` | Caso |
 |---|---|---|
 | 404 | `no_encontrado` | Código inexistente o teléfono distinto (RN-14) |
-| 422 | `regla_negocio` | Faltan menos de 2 horas para el inicio (RN-13), o la reserva ya estaba cancelada (RN-12) |
+| 422 | `regla_negocio` | Faltan menos de 6 horas para el inicio (RN-13), o la reserva ya estaba cancelada (RN-12) |
 
 Criterios: AC-13, AC-14, AC-15, AC-16.
 

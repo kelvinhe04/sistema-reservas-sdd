@@ -57,18 +57,19 @@ def test_ac14_cancela_y_libera_franja(client, reserva, cancha):
 
 
 @pytest.mark.ac("AC-14")
-def test_ac14_exactamente_2h_se_puede_cancelar(client, reserva, reloj):
-    reloj.fijar(datetime(2026, 11, 21, 16, 0, tzinfo=TZ))
+def test_ac14_exactamente_6h_se_puede_cancelar(client, reserva, reloj):
+    """Cambio de requerimiento (ciclo 3): la reserva es a las 18:00; a las 12:00 faltan 6 h."""
+    reloj.fijar(datetime(2026, 11, 21, 12, 0, tzinfo=TZ))
     r = client.post(f"/api/reservas/{reserva['codigo']}/cancelar", json={"telefono": "62001234"})
     assert r.status_code == 200
 
 
 @pytest.mark.ac("AC-15")
-def test_ac15_rechaza_cancelar_a_menos_de_2h(client, reserva, reloj):
-    """Dado una reserva que empieza en menos de 2 horas
+def test_ac15_rechaza_cancelar_a_menos_de_6h(client, reserva, reloj):
+    """Dado una reserva que empieza en menos de 6 horas
     Cuando el jugador intenta cancelarla
     Entonces responde 422 `regla_negocio` indicando que ya pasó el límite."""
-    reloj.fijar(datetime(2026, 11, 21, 16, 1, tzinfo=TZ))
+    reloj.fijar(datetime(2026, 11, 21, 12, 1, tzinfo=TZ))  # faltan 5 h 59 min
     r = client.post(f"/api/reservas/{reserva['codigo']}/cancelar", json={"telefono": "62001234"})
     assert r.status_code == 422
     assert r.json()["error"] == "regla_negocio"
