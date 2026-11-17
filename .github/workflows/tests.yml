@@ -24,12 +24,7 @@ jobs:
       - name: Instalar dependencias
         run: |
           python -m pip install --upgrade pip
-          if [ -f requirements.txt ]; then
-            pip install -r requirements.txt
-          else
-            # Hasta que exista requirements.txt (T-01)
-            pip install pytest httpx tzdata
-          fi
+          pip install -r requirements.txt
 
       - name: Ejecutar pruebas
         run: pytest -v
