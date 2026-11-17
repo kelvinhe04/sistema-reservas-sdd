@@ -29,6 +29,19 @@ uvicorn src.app.main:app --reload
 
 La base SQLite se crea sola en `data/reservas.db`. Para la demo, crea las canchas desde el panel de administración.
 
+### Con Docker (opcional)
+
+```
+docker build -t reservas .
+docker run -p 8000:8000 -e ADMIN_KEY=una-clave -v reservas-data:/app/data reservas
+```
+
+La app queda en http://127.0.0.1:8000/. El volumen `reservas-data` conserva la base entre ejecuciones.
+
+### Integración continua
+
+`.github/workflows/tests.yml` ejecuta `pytest` en cada Pull Request y en cada push a `main` (job `pytest`, el check que exige la protección de `main`) y repite `pytest -m conflicto` en un paso aparte. Ver `docs/testing.md`.
+
 ## Material
 
 - `docs/ia-context.md`: contexto y reglas para los asistentes de IA de cada integrante

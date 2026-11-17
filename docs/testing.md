@@ -87,7 +87,7 @@ Las reglas RN-06, RN-07 y RN-13 dependen de la hora actual. Las pruebas no usan 
 
 ## Integración continua
 
-`.github/workflows/tests.yml` ejecuta `pytest` en cada Pull Request y en cada push a `main`, con Python 3.12, y después repite aparte `pytest -m conflicto` para que la prueba obligatoria se vea en su propio paso. Instala `requirements.txt` cuando exista (tarea T-01); mientras tanto instala `pytest`, `httpx` y `tzdata`. El PR no debe fusionarse si la CI falla.
+`.github/workflows/tests.yml` ejecuta `pytest` en cada Pull Request y en cada push a `main`, con Python 3.12, y después repite aparte `pytest -m conflicto` para que la prueba obligatoria se vea en su propio paso. Instala siempre `requirements.txt` (ya no hay rama de respaldo). El PR no debe fusionarse si la CI falla.
 
 **Nota para T-01:** `requirements.txt` debe incluir `tzdata`. En Windows, `zoneinfo` no trae la base de zonas horarias y `ZoneInfo("America/Panama")` falla sin ese paquete (detectado al ejecutar el esqueleto en local).
 
