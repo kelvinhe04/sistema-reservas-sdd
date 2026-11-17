@@ -26,6 +26,7 @@ Todos los errores usan la misma forma:
 | `no_encontrado` | 404 | Recurso inexistente; también código y teléfono que no coinciden (RN-14) |
 | `no_autorizado` | 401 | Falta la clave de administrador o es incorrecta |
 | `conflicto` | 409 | La franja ya tiene una reserva confirmada o un bloqueo (RN-01, RN-02), o se intenta bloquear una franja con reserva (RN-17) |
+| `base_ocupada` | 503 | Otro escritor retuvo la base más que `BUSY_TIMEOUT_MS` en una escritura distinta de crear reserva o bloqueo; con la cabecera `Retry-After`. El jugador puede reintentar (#52) |
 
 También usan este formato los errores que genera el propio framework: un cuerpo que no es JSON legible responde 400 `validacion`, y una ruta de `/api` inexistente responde 404 `no_encontrado`.
 
