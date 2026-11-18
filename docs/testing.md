@@ -115,6 +115,18 @@ En el navegador, con el servidor local y una base de demostración, se recorrió
 - Sin errores de JavaScript en consola (solo los 401/422 esperados de los casos negativos).
 - Corregido durante la prueba: columnas de la agenda, alineación de formularios cuando aparece un error, precio en formato `$12.00`, y errores de Starlette (cuerpo ilegible, ruta inexistente) con el formato único.
 
+### Prueba manual del asistente paso a paso (16/11/2026, issue #62)
+
+Con el servidor local, en escritorio y en móvil (375 px):
+
+- Paso 1: tabla de canchas con disponibilidad y ocupación del día; en móvil, filas en formato tarjeta con precio visible.
+- Paso 2: días con conteo de libres (lista deslizable en móvil que se centra en el día elegido), selector para otra fecha hasta 30 días, franjas pasadas y ocupadas deshabilitadas, avisos de disponibilidad baja y de horas de hoy ya iniciadas.
+- Paso 3: enviar vacío marca nombre y teléfono; el teléfono con espacio se envía solo con dígitos.
+- Paso 4: código, copiar código y plazo de cancelación correcto (19:00 → hasta las 13:00, con el límite de 6 h del ciclo 3).
+- Conflicto: otra persona reserva el mismo horario mientras se llenan los datos → vuelve al paso 2 con el aviso "Ese horario se acaba de ocupar" y sin horario elegido.
+- Mi reserva: consultar con código y teléfono, cancelar con confirmación en la página (sin diálogos del navegador), estado pasa a "Cancelada".
+- Encontrado y corregido durante la prueba: el navegador servía el `jugador.js` anterior desde caché (se añadió `?v=` a los recursos), plural de "1 libre", días a ancho completo en móvil y precio oculto en móvil.
+
 ## Dudas resueltas (issue #22)
 
 - RN-13: con exactamente 6 h de antelación el jugador todavía puede cancelar (antes 2 h; cambiado en el ciclo 3, #64).
@@ -133,3 +145,4 @@ En el navegador, con el servidor local y una base de demostración, se recorrió
 | 17/11/2026 | Corrección #52 (rama `ciclo3/qa/base-ocupada-503`; local, Windows, Python 3.11) | 160 | 160 | 0 | 0 | 3 pruebas nuevas en `integration/test_base_ocupada.py`: cancelar con la base ocupada responde 503 `base_ocupada` en el formato único y la reserva sigue confirmada |
 | 17/11/2026 | Menores #69 (rama `ciclo3/dev/menores-pendientes`; local, Windows, Python 3.11) | 167 | 167 | 0 | 0 | Nuevas: teléfono con 2 activas en paralelo (5 repeticiones), `ADMIN_KEY` vacía, eliminar bloqueo. `pytest -m conflicto`: 43 pasan |
 | 17/11/2026 | `0871d97` (main; local, Windows, Python 3.11) | 167 | 167 | 0 | 0 | Corrida usada para las capturas de la diapositiva 10. `pytest -m conflicto`: 43 pasan, 124 no seleccionadas |
+| 17/11/2026 | asistente paso a paso sobre main del ciclo 3 (local, Windows, Python 3.13) | 172 | 172 | 0 | 0 | +5 pruebas de interfaz: recursos referenciados, estructura del asistente y límite de cancelación de la UI igual a `CANCEL_LIMIT_HOURS` (6 h) |
