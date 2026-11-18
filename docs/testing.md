@@ -76,7 +76,7 @@ Las reglas RN-06, RN-07 y RN-13 dependen de la hora actual. Las pruebas no usan 
 
 - Franja que empieza justo ahora (rechazada) y la siguiente (aceptada).
 - Exactamente 30 días (aceptada) y 31 días (rechazada).
-- Cancelación a 2 h 01 min (aceptada), a 1 h 59 min (rechazada) y a exactamente 2 h (aceptada, RN-13 según #22).
+- Cancelación a 6 h 01 min (aceptada), a 5 h 59 min (rechazada) y a exactamente 6 h (aceptada). Límite de 6 h desde el cambio de requerimiento del ciclo 3 (#64); antes 2 h (#22).
 - Límite por teléfono: 3 reservas futuras bloquean la cuarta; 3 reservas ya jugadas no (RN-11 según #22).
 
 ## Datos de prueba
@@ -87,7 +87,7 @@ Las reglas RN-06, RN-07 y RN-13 dependen de la hora actual. Las pruebas no usan 
 
 ## Integración continua
 
-`.github/workflows/tests.yml` ejecuta `pytest` en cada Pull Request y en cada push a `main`, con Python 3.12, y después repite aparte `pytest -m conflicto` para que la prueba obligatoria se vea en su propio paso. Instala `requirements.txt` cuando exista (tarea T-01); mientras tanto instala `pytest`, `httpx` y `tzdata`. El PR no debe fusionarse si la CI falla.
+`.github/workflows/tests.yml` ejecuta `pytest` en cada Pull Request y en cada push a `main`, con Python 3.12, y después repite aparte `pytest -m conflicto` para que la prueba obligatoria se vea en su propio paso. Instala siempre `requirements.txt` (ya no hay rama de respaldo). El PR no debe fusionarse si la CI falla.
 
 **Nota para T-01:** `requirements.txt` debe incluir `tzdata`. En Windows, `zoneinfo` no trae la base de zonas horarias y `ZoneInfo("America/Panama")` falla sin ese paquete (detectado al ejecutar el esqueleto en local).
 
@@ -110,8 +110,8 @@ T-01 a T-16 están implementadas y **ninguna prueba está en `skip`**; `test_tra
 
 En el navegador, con el servidor local y una base de demostración, se recorrió el flujo completo en escritorio y en móvil (375 px):
 
-- Admin: clave incorrecta rechazada; entrar; crear canchas; precio negativo rechazado en el campo; agenda del día; bloquear una franja con motivo; cancelar una reserva a menos de 2 h (permitido al admin).
-- Jugador: elegir cancha, día y franja; las franjas ya iniciadas salen deshabilitadas; teléfono inválido marcado en su campo; reserva confirmada con código; la franja pasa a ocupada; consultar con código y teléfono; cancelar a menos de 2 h rechazado con el mensaje del límite.
+- Admin: clave incorrecta rechazada; entrar; crear canchas; precio negativo rechazado en el campo; agenda del día; bloquear una franja con motivo; cancelar una reserva a menos de 6 h (permitido al admin).
+- Jugador: elegir cancha, día y franja; las franjas ya iniciadas salen deshabilitadas; teléfono inválido marcado en su campo; reserva confirmada con código; la franja pasa a ocupada; consultar con código y teléfono; cancelar a menos de 6 h rechazado con el mensaje del límite.
 - Sin errores de JavaScript en consola (solo los 401/422 esperados de los casos negativos).
 - Corregido durante la prueba: columnas de la agenda, alineación de formularios cuando aparece un error, precio en formato `$12.00`, y errores de Starlette (cuerpo ilegible, ruta inexistente) con el formato único.
 
@@ -122,14 +122,14 @@ Con el servidor local, en escritorio y en móvil (375 px):
 - Paso 1: tabla de canchas con disponibilidad y ocupación del día; en móvil, filas en formato tarjeta con precio visible.
 - Paso 2: días con conteo de libres (lista deslizable en móvil que se centra en el día elegido), selector para otra fecha hasta 30 días, franjas pasadas y ocupadas deshabilitadas, avisos de disponibilidad baja y de horas de hoy ya iniciadas.
 - Paso 3: enviar vacío marca nombre y teléfono; el teléfono con espacio se envía solo con dígitos.
-- Paso 4: código, copiar código y plazo de cancelación correcto (19:00 → hasta las 17:00).
+- Paso 4: código, copiar código y plazo de cancelación correcto (19:00 → hasta las 13:00, con el límite de 6 h del ciclo 3).
 - Conflicto: otra persona reserva el mismo horario mientras se llenan los datos → vuelve al paso 2 con el aviso "Ese horario se acaba de ocupar" y sin horario elegido.
 - Mi reserva: consultar con código y teléfono, cancelar con confirmación en la página (sin diálogos del navegador), estado pasa a "Cancelada".
 - Encontrado y corregido durante la prueba: el navegador servía el `jugador.js` anterior desde caché (se añadió `?v=` a los recursos), plural de "1 libre", días a ancho completo en móvil y precio oculto en móvil.
 
 ## Dudas resueltas (issue #22)
 
-- RN-13: con exactamente 2 h de antelación el jugador todavía puede cancelar.
+- RN-13: con exactamente 6 h de antelación el jugador todavía puede cancelar (antes 2 h; cambiado en el ciclo 3, #64).
 - RN-11: solo cuentan como activas las reservas confirmadas cuya franja no ha empezado.
 - AC-16: reformulado; no existe operación de "reactivar", se prueba cancelar dos veces.
 
@@ -140,4 +140,9 @@ Con el servidor local, en escritorio y en móvil (375 px):
 | 15/11/2026 | esqueleto ciclo 1 (local, Windows, Python 3.13) | 109 | 3 | 0 | 106 | Pasan las 3 de trazabilidad; las demás en `skip` hasta implementar `src/`. `pytest -m conflicto`: 30 omitidas |
 | 15/11/2026 | T-01 a T-10 (local, Windows, Python 3.13) | 134 | 117 | 0 | 17 | Omitidas solo las de administración (T-11 a T-15). AC-05 y AC-06 pasan en servicio y API |
 | 15/11/2026 | T-01 a T-16 (local, Windows, Python 3.13) | 157 | 157 | 0 | 0 | AC-01 a AC-22 cubiertos; `pytest -m conflicto`: 38 pasan |
-| 16/11/2026 | asistente paso a paso (local, Windows, Python 3.13) | 161 | 161 | 0 | 0 | +4 pruebas de interfaz: recursos referenciados existen y la vista del jugador tiene los 4 pasos y "Mi reserva" |
+| 16/11/2026 | `8c33d13` (main, T-01 a T-16; local, Windows, Python 3.13) | 157 | 157 | 0 | 0 | Verificación final T-18 (#46): AC-01 a AC-22 con prueba y sin `skip` (`test_trazabilidad.py` pasa; 70 pruebas de aceptación). `pytest -m conflicto`: 38 de 38 pasan. Hallazgo abierto: #52 |
+| 16/11/2026 | Cambio ciclo 3: ventana de cancelación 2 h → 6 h (#64), commit de la rama `ciclo3/spec/cambio-ventana-cancelacion` (local, Windows, Python 3.11) | 157 | 157 | 0 | 0 | Pruebas de cancelación al límite (6 h 01, 5 h 59, 6 h exacta) ajustadas; `pytest -m conflicto`: 38 pasan |
+| 17/11/2026 | Corrección #52 (rama `ciclo3/qa/base-ocupada-503`; local, Windows, Python 3.11) | 160 | 160 | 0 | 0 | 3 pruebas nuevas en `integration/test_base_ocupada.py`: cancelar con la base ocupada responde 503 `base_ocupada` en el formato único y la reserva sigue confirmada |
+| 17/11/2026 | Menores #69 (rama `ciclo3/dev/menores-pendientes`; local, Windows, Python 3.11) | 167 | 167 | 0 | 0 | Nuevas: teléfono con 2 activas en paralelo (5 repeticiones), `ADMIN_KEY` vacía, eliminar bloqueo. `pytest -m conflicto`: 43 pasan |
+| 17/11/2026 | `0871d97` (main; local, Windows, Python 3.11) | 167 | 167 | 0 | 0 | Corrida usada para las capturas de la diapositiva 10. `pytest -m conflicto`: 43 pasan, 124 no seleccionadas |
+| 17/11/2026 | asistente paso a paso sobre main del ciclo 3 (local, Windows, Python 3.13) | 172 | 172 | 0 | 0 | +5 pruebas de interfaz: recursos referenciados, estructura del asistente y límite de cancelación de la UI igual a `CANCEL_LIMIT_HOURS` (6 h) |

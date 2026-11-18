@@ -66,3 +66,15 @@ def test_cuerpo_ilegible_usa_formato_unico(client):
     r = client.post("/api/reservas", content=b"\xff\xfe no es json", headers={"Content-Type": "application/json"})
     assert r.status_code in (400, 422)
     assert r.json()["error"] == "validacion"
+
+
+def test_la_ui_muestra_el_mismo_limite_de_cancelacion_que_el_servidor(client):
+    """RN-13: el plazo que ve el jugador (paso 4 y Mi reserva) debe ser el que aplica el servidor."""
+    from src.app.config import Settings
+
+    horas = Settings().cancel_limit_hours
+    js = client.get("/jugador.js").text
+    m = re.search(r"const LIMITE_CANCELACION_H = (\d+);", js)
+    assert m and int(m.group(1)) == horas
+    html = client.get("/").text
+    assert f"Hasta {horas} horas antes" in html and f"Con menos de {horas} horas" in html

@@ -188,7 +188,7 @@ def test_ac21_no_bloquea_franja_reservada(client, admin_headers, cancha):
 
 @pytest.mark.ac("AC-22")
 def test_ac22_admin_cancela_sin_limite(client, admin_headers, reloj, cancha):
-    """Dado una reserva confirmada que empieza en menos de 2 horas
+    """Dado una reserva confirmada que empieza en menos de 6 horas
     Cuando el administrador la cancela
     Entonces responde 200 con estado `cancelada` y la franja se libera."""
     reserva = _reservar(client, cancha)

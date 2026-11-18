@@ -29,6 +29,19 @@ uvicorn src.app.main:app --reload
 
 La base SQLite se crea sola en `data/reservas.db`. Para la demo, crea las canchas desde el panel de administración.
 
+### Con Docker (opcional)
+
+```
+docker build -t reservas .
+docker run -p 8000:8000 -e ADMIN_KEY=una-clave -v reservas-data:/app/data reservas
+```
+
+La app queda en http://127.0.0.1:8000/. El volumen `reservas-data` conserva la base entre ejecuciones.
+
+### Integración continua
+
+`.github/workflows/tests.yml` ejecuta `pytest` en cada Pull Request y en cada push a `main` (job `pytest`, el check que exige la protección de `main`) y repite `pytest -m conflicto` en un paso aparte. Ver `docs/testing.md`.
+
 ## Material
 
 - `docs/ia-context.md`: contexto y reglas para los asistentes de IA de cada integrante
@@ -56,11 +69,11 @@ tests/
 
 ## Checklist de entrega
 
-- [ ] Repositorio Git, Issues, commits identificables, ramas, Pull Requests, historial
-- [ ] `specs/` completo y coherente con el código
-- [ ] Pruebas automatizadas: unitarias, reglas críticas, conflictos de reserva, validaciones de usuario, criterios de aceptación
-- [ ] Prueba automatizada obligatoria de **no permitir doble reserva**
-- [ ] `docs/ai-log.md` completo
-- [ ] Evidencia del cambio de requerimiento a mitad del proyecto (cambio → specs → criterios → plan → código → pruebas → resultados)
-- [ ] Material de presentación (PPT/Canva o equivalente)
+- [x] Repositorio Git, Issues, commits identificables, ramas, Pull Requests, historial
+- [x] `specs/` completo y coherente con el código
+- [x] Pruebas automatizadas: unitarias, reglas críticas, conflictos de reserva, validaciones de usuario, criterios de aceptación
+- [x] Prueba automatizada obligatoria de **no permitir doble reserva**
+- [x] `docs/ai-log.md` completo
+- [x] Evidencia del cambio de requerimiento a mitad del proyecto (cambio → specs → criterios → plan → código → pruebas → resultados): issue #64, PR #65
+- [x] Material de presentación (PPT/Canva o equivalente): `docs/material/presentacion.pptx`
 - [ ] Todos preparados para presentar y recibir un cambio en vivo

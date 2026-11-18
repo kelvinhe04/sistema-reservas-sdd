@@ -3,7 +3,7 @@
 
 const $ = (id) => document.getElementById(id);
 const DIAS_RAPIDOS = 7;
-const LIMITE_CANCELACION_H = 2;
+const LIMITE_CANCELACION_H = 6; // RN-13 (cambio del ciclo 3, D-11): debe coincidir con CANCEL_LIMIT_HOURS
 const OFFSET_SEDE = "-05:00"; // America/Panama no tiene horario de verano
 
 // ---------- Iconos (SVG en línea, sin dependencias) ----------

@@ -22,7 +22,7 @@ Estado: borrador del ciclo 1 (Architecture / Dev Lead). Tareas ordenadas para el
 | T-07 | Prueba de no doble reserva concurrente | Prueba que lanza solicitudes simultáneas sobre la misma franja y verifica una sola reserva confirmada (obligatoria) | RF-03 | RN-01 | AC-05, AC-06 |
 | T-08 | Límite por teléfono | Máximo de reservas confirmadas por teléfono, dentro de la transacción de creación | RF-03 | RN-11 | AC-11 |
 | T-09 | Consultar reserva | `GET /api/reservas/{codigo}` con código y teléfono, respuesta uniforme si no coincide | RF-05 | RN-14 | AC-12, AC-13 |
-| T-10 | Cancelar como jugador | `POST /api/reservas/{codigo}/cancelar`: ventana de 2 h, estado, liberación de la franja | RF-06 | RN-03, RN-12, RN-13, RN-14 | AC-13, AC-14, AC-15, AC-16 |
+| T-10 | Cancelar como jugador | `POST /api/reservas/{codigo}/cancelar`: ventana de 6 h (cambio ciclo 3), estado, liberación de la franja | RF-06 | RN-03, RN-12, RN-13, RN-14 | AC-13, AC-14, AC-15, AC-16 |
 | T-11 | Acceso de administrador | Dependencia que valida `X-Admin-Key` en tiempo constante y `POST /api/admin/login` | RF-07 | RN-19 | AC-17 |
 | T-12 | Gestión de canchas | Endpoints de administración de canchas, desactivar sin tocar reservas | RF-09 | RN-15, RN-16, RN-20 | AC-19 |
 | T-13 | Bloqueos | `POST` y `DELETE /api/admin/bloqueos`, rechazo si hay reserva confirmada, cruce con triggers | RF-10 | RN-02, RN-17, RN-18 | AC-20, AC-21 |

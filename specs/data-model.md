@@ -5,6 +5,7 @@ Estado: borrador del ciclo 1 (Architecture / Dev Lead). Base de datos SQLite (ve
 ## Convenciones
 
 - Fecha: texto `YYYY-MM-DD`. Hora de inicio de franja: texto `HH:MM` (siempre en punto, RN-04). Ambas en la zona horaria de la sede, America/Panama (RNF-04).
+- **Comparación de fecha y hora como texto.** Las consultas que necesitan saber si una franja ya empezó comparan `fecha || ' ' || hora_inicio` con el instante actual formateado como `'YYYY-MM-DD HH:MM'` en la hora de la sede. Funciona porque ambos formatos tienen ancho fijo y ceros a la izquierda, así que el orden alfabético coincide con el cronológico. Requisitos para no romperlo: guardar siempre `fecha` en ISO `YYYY-MM-DD` y `hora_inicio` en `HH:MM` de 24 h (lo garantizan las validaciones de `schemas.py`), y formatear el instante actual en la misma zona horaria, nunca en UTC.
 - Dinero: entero en centavos (`precio_hora`), para evitar errores de redondeo.
 - Marcas de tiempo (`creada_en`, `cancelada_en`): texto ISO 8601 con zona horaria.
 - Claves primarias enteras autoincrementales. Claves foráneas activadas (`PRAGMA foreign_keys = ON`).
@@ -99,14 +100,14 @@ Estas se validan en la capa de servicio, con parámetros de `config.py` (ver `ar
 |---|---|
 | RN-04, RN-05: franja de 1 h dentro del horario 08:00–22:00 | `services/disponibilidad.py` |
 | RN-06, RN-07: no pasado, máximo 30 días de anticipación | `services/reservas.py` con reloj inyectable |
-| RN-11: máximo 3 reservas confirmadas por teléfono | `services/reservas.py`, dentro de la transacción de creación |
-| RN-13: cancelación del jugador hasta 2 h antes | `services/reservas.py` |
+| RN-11: máximo 3 reservas activas (confirmadas y con franja aún no iniciada) por teléfono | `services/reservas.py`, dentro de la transacción de creación |
+| RN-13: cancelación del jugador si faltan 6 h o más (cambio ciclo 3, #64) | `services/reservas.py` |
 | RN-15: cancha activa para reservar | `services/reservas.py` |
 
 ## Consultas clave
 
 - **Disponibilidad de una cancha y fecha (RF-02):** todas las franjas del horario, marcadas ocupadas si existe una reserva confirmada o un bloqueo para esa franja.
-- **Reservas activas de un teléfono (RN-11):** `SELECT COUNT(*) FROM reservas WHERE telefono = ? AND estado = 'confirmada'`.
+- **Reservas activas de un teléfono (RN-11, decidido en #22):** `SELECT COUNT(*) FROM reservas WHERE telefono = ? AND estado = 'confirmada' AND (fecha || ' ' || hora_inicio) > ?`, donde el parámetro es el instante actual como `'YYYY-MM-DD HH:MM'` (ver "Comparación de fecha y hora como texto"). Las reservas ya jugadas no cuentan.
 - **Consultar o cancelar (RN-14):** `WHERE codigo = ? AND telefono = ?`; si no hay fila, se responde no encontrado.
 
 ## Trazabilidad

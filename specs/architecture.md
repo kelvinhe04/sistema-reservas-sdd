@@ -28,7 +28,7 @@ Ninguna regla de concurrencia depende de comprobaciones en memoria ni de bloqueo
 
 **Configuración obligatoria de cada conexión SQLite** (`db.py`): `isolation_level=None` (las transacciones se abren a mano con `BEGIN IMMEDIATE`), `PRAGMA busy_timeout` de varios segundos para que un escritor espere en lugar de fallar con `database is locked`, `PRAGMA foreign_keys = ON` y `PRAGMA journal_mode = WAL`. Cada hilo o petición usa su propia conexión; nunca se comparte una entre hilos. Sin esto, la prueba concurrente AC-06 falla de forma intermitente.
 
-**Fábrica de la aplicación.** `main.py` expone `create_app(db_path=None, reloj=None)`: si no se indican, toma `DB_PATH` de la configuración y el reloj real. Las pruebas la usan para inyectar una base temporal y un reloj controlable (`tests/conftest.py`).
+**Fábrica de la aplicación.** `main.py` expone `create_app(db_path=None, reloj=None, settings=None)`: si no se indican, toma `DB_PATH` de la configuración y el reloj real. Las pruebas la usan para inyectar una base temporal y un reloj controlable (`tests/conftest.py`).
 
 ## Estructura de `src/`
 
@@ -68,10 +68,11 @@ Los valores marcados como supuesto en `business-rules.md` viven en `config.py` y
 | `OPEN_HOUR` / `CLOSE_HOUR` | 8 / 22 | RN-05 |
 | `MAX_ADVANCE_DAYS` | 30 | RN-07 |
 | `MAX_ACTIVE_PER_PHONE` | 3 | RN-11 |
-| `CANCEL_LIMIT_HOURS` | 2 | RN-13 |
+| `CANCEL_LIMIT_HOURS` | 6 | RN-13 (cambio de requerimiento, ciclo 3) |
 | `TIMEZONE` | America/Panama | RNF-04 |
 | `ADMIN_KEY` | sin valor por defecto; obligatoria al iniciar | RN-19, RNF-07 |
 | `DB_PATH` | `data/reservas.db` | |
+| `BUSY_TIMEOUT_MS` | 5000 | Espera de un escritor bloqueado antes de fallar (AC-06) |
 
 ## Decisiones transversales
 

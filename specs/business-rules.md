@@ -17,7 +17,7 @@ Estado: borrador del ciclo 1. Los valores marcados con **[Supuesto]** son parám
 | RN-04 | Las franjas duran 1 hora y empiezan en hora en punto **[Supuesto]** |
 | RN-05 | Horario de operación de 08:00 a 22:00, es decir, la última franja empieza a las 21:00 **[Supuesto]** |
 | RN-06 | No se puede reservar una franja que ya empezó o que está en el pasado |
-| RN-07 | Se puede reservar con un máximo de 30 días de anticipación **[Supuesto]** |
+| RN-07 | Se puede reservar con un máximo de 30 días de anticipación **[Supuesto]**. Aplica solo a las reservas del jugador, no a los bloqueos del administrador (RN-18, D-10) |
 
 ## Reservas
 
@@ -28,7 +28,7 @@ Estado: borrador del ciclo 1. Los valores marcados con **[Supuesto]** son parám
 | RN-10 | Cada reserva recibe un código único e irrepetible, que se usa junto al teléfono para consultarla o cancelarla. El código tiene 8 caracteres en mayúsculas y dígitos, sin caracteres ambiguos (0/O, 1/I/L), y no se genera en secuencia (D-05) |
 | RN-11 | Un teléfono puede tener como máximo 3 reservas activas a la vez **[Supuesto]**. Una reserva es **activa** si está `confirmada` y su franja todavía no ha empezado; las ya jugadas o canceladas no cuentan |
 | RN-12 | Estados de una reserva: `confirmada` y `cancelada`. Una cancelada no se reactiva; se crea una nueva |
-| RN-13 | El jugador puede cancelar si faltan **2 horas o más** para el inicio de la franja **[Supuesto]**: con exactamente 2 h todavía puede; con menos de 2 h, no. El administrador puede cancelar en cualquier momento |
+| RN-13 | El jugador puede cancelar si faltan **6 horas o más** para el inicio de la franja **[Supuesto]** (cambio de requerimiento, ciclo 3; antes 2 h): con exactamente 6 h todavía puede; con menos de 6 h, no. El administrador puede cancelar en cualquier momento |
 | RN-14 | Consultar o cancelar exige que el código y el teléfono coincidan; si no, el sistema responde que no se encontró la reserva, sin revelar datos |
 
 ## Canchas y bloqueos
@@ -38,7 +38,7 @@ Estado: borrador del ciclo 1. Los valores marcados con **[Supuesto]** son parám
 | RN-15 | Una cancha desactivada no aparece para reservar y no admite nuevas reservas |
 | RN-16 | Desactivar una cancha no borra ni cancela sus reservas futuras ya confirmadas; el administrador decide qué hacer con ellas |
 | RN-17 | El administrador no puede bloquear una franja que ya tiene una reserva confirmada; primero debe cancelar esa reserva |
-| RN-18 | Un bloqueo se puede quitar en cualquier momento y la franja vuelve a estar libre |
+| RN-18 | Un bloqueo se puede quitar en cualquier momento y la franja vuelve a estar libre. El administrador puede bloquear cualquier franja válida de cualquier fecha, sin el límite de 30 días de RN-07; un bloqueo sobre una franja ya pasada no tiene efecto práctico y no se rechaza (D-10) |
 
 ## Administración
 
